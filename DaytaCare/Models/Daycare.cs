@@ -29,11 +29,9 @@ namespace DaytaCare.Models
         [Required]
         public string Email { get; set; }
 
-        [Required]
         [Column(TypeName = "money")]
         public decimal Price { get; set; }
 
-        [Required]
         public int LicenseNumber { get; set; }
     }
 }
