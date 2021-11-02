@@ -8,10 +8,7 @@ namespace DaytaCare.Services.Identity
 {
   public class IdentityUserService : IUserService
   {
-    public IActionResult Index ( )
-    {
-      return View();
-    }
+
   }
 }
 
