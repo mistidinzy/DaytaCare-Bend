@@ -13,8 +13,11 @@ namespace DaytaCare.Data
         {
         }
 
-    public DbSet<Daycare> Daycares { get; set; }
-    protected override void OnModelCreating ( ModelBuilder modelbuilder )
+        public DbSet<Daycare> Daycares { get; set; }
+        public DbSet<Amenity> Amenities { get; set; }
+
+
+        protected override void OnModelCreating ( ModelBuilder modelbuilder )
     {
       base.OnModelCreating(modelbuilder);
     }
