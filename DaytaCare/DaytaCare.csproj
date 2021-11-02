@@ -15,5 +15,9 @@
 
   <ItemGroup>
     <None Remove="Microsoft.EntityFrameworkCore" />
+    <None Remove="Data\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Data\" />
   </ItemGroup>
 </Project>
