@@ -3,9 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using DaytaCare.Data;
+using DaytaCare.Models.Identity;
+using DaytaCare.Services.Identity;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -35,6 +38,18 @@ namespace DaytaCare
                 options.UseSqlServer(connectionString);
             });
 
+
+      //Identity!!!
+      services.AddIdentity<ApplicationUser, IdentityRole>(options =>
+      {
+        //Configure password requirements, etc.
+        options.User.RequireUniqueEmail = true;
+      })
+        .AddEntityFrameworkStores<DaytaCareDbContext>();
+
+      services.AddScoped<IUserService, IdentityUserService>();
+
+
             services.AddControllers();
 
             services.AddSwaggerGen(options =>
@@ -42,7 +57,7 @@ namespace DaytaCare
                 // Make sure get the "using Statement"
                 options.SwaggerDoc("v1", new OpenApiInfo()
                 {
-                    Title = "DaytaCare Project",
+                    Title = "Dayta Care",
                     Version = "v1",
                 });
             });
@@ -61,25 +76,20 @@ namespace DaytaCare
             });
 
             app.UseSwaggerUI(options => {
-                options.SwaggerEndpoint("/api/v1/swagger.json", "DaytaCare");
+                options.SwaggerEndpoint("/api/v1/swagger.json", "Dayta Care");
                 options.RoutePrefix = "docs";
             });
 
             app.UseRouting();
 
-
-
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapControllers();
-
-                endpoints.MapGet("/", context =>
+                endpoints.MapGet("/", async context =>
                 {
                     var req = context.Request;
                     var res = context.Response;
 
-                    context.Response.Redirect("/docs");
-                    return Task.CompletedTask;
+                    await context.Response.WriteAsync("Hello World!");
                 });
             });
         }
