@@ -20,19 +20,4 @@
     <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="5.0.11" />
   </ItemGroup>
 
-<<<<<<< HEAD
-  <ItemGroup>
-    <None Remove="Microsoft.EntityFrameworkCore" />
-    <None Remove="Data\" />
-    <None Remove="Swashbuckle.AspNetCore" />
-    <None Remove="Controllers\" />
-    <None Remove="Microsoft.VisualStudio.Web.CodeGeneration.Design" />
-    <None Remove="Microsoft.EntityFrameworkCore.Sqlite" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Data\" />
-    <Folder Include="Controllers\" />
-  </ItemGroup>
-=======
->>>>>>> 6f1572b816b3cb5e2084e080d6e8a459b1b93b31
 </Project>
