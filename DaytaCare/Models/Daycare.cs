@@ -35,4 +35,3 @@ namespace DaytaCare.Models
         public int LicenseNumber { get; set; }
     }
 }
-
