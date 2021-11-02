@@ -1,7 +1,6 @@
 using System;
 using DaytaCare.Models.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
-
 using DaytaCare.Models;
 using Microsoft.EntityFrameworkCore;
 
@@ -15,11 +14,16 @@ namespace DaytaCare.Data
 
         public DbSet<Daycare> Daycares { get; set; }
         public DbSet<Amenity> Amenities { get; set; }
+        public DbSet<DaycareAmenity> DaycareAmenities { get; set; }
 
 
-        protected override void OnModelCreating ( ModelBuilder modelbuilder )
-    {
-      base.OnModelCreating(modelbuilder);
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+
+            modelBuilder.Entity<DaycareAmenity>()
+                .HasKey(da => new { da.DaycareId, da.AmenityId });
     }
-  }
+
+    }
 }
