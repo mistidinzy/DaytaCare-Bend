@@ -1,6 +1,8 @@
 using System;
 using DaytaCare.Models.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+
+using DaytaCare.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace DaytaCare.Data
@@ -10,6 +12,8 @@ namespace DaytaCare.Data
         public DaytaCareDbContext(DbContextOptions options) : base(options)
         {
         }
+
+    public DbSet<Daycare> Daycares { get; set; }
     protected override void OnModelCreating ( ModelBuilder modelbuilder )
     {
       base.OnModelCreating(modelbuilder);
