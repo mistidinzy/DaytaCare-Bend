@@ -42,7 +42,7 @@ namespace DaytaCare
                 // Make sure get the "using Statement"
                 options.SwaggerDoc("v1", new OpenApiInfo()
                 {
-                    Title = "School Demo",
+                    Title = "DaytaCare Project",
                     Version = "v1",
                 });
             });
@@ -61,7 +61,7 @@ namespace DaytaCare
             });
 
             app.UseSwaggerUI(options => {
-                options.SwaggerEndpoint("/api/v1/swagger.json", "Student Demo");
+                options.SwaggerEndpoint("/api/v1/swagger.json", "DaytaCare");
                 options.RoutePrefix = "docs";
             });
 
@@ -69,12 +69,13 @@ namespace DaytaCare
 
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapGet("/", async context =>
+                endpoints.MapGet("/", context =>
                 {
                     var req = context.Request;
                     var res = context.Response;
 
-                    await context.Response.WriteAsync("Hello World!");
+                    context.Response.Redirect("/docs");
+                    return Task.CompletedTask;
                 });
             });
         }
