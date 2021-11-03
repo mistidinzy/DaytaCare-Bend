@@ -1,7 +1,7 @@
 ﻿using System;
 namespace DaytaCare.Services
 {
-    public class DatabaseDaycareRepository
+    public class DatabaseDaycareRepository : IDaycareRepository
     {
       
     }
