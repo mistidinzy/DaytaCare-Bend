@@ -14,4 +14,9 @@ namespace DaytaCare.Models.Identity
     [Required]
     public string Password { get; set; }
   }
+
+  public class DaycareRegisterData
+  {
+
+  }
 }
