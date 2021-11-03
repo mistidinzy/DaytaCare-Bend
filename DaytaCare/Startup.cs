@@ -2,8 +2,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+
 using DaytaCare.Data;
 using DaytaCare.Models.Identity;
+using DaytaCare.Services;
 using DaytaCare.Services.Identity;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -49,6 +51,7 @@ namespace DaytaCare
 
       services.AddScoped<IUserService, IdentityUserService>();
 
+      services.AddScoped<IDaycareRepository, DatabaseDaycareRepository>();
 
             services.AddControllers();
 
