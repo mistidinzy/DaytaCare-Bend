@@ -31,5 +31,18 @@ namespace DaytaCare.Services
             _context.Daycares.Add(daycare);
             await _context.SaveChangesAsync();
         }
+
+        public async Task<bool> TryDelete(int id)
+        {
+            var daycare = await _context.Daycares.FindAsync(id);
+            if (daycare == null)
+            {
+                return false;
+            }
+
+            _context.Daycares.Remove(daycare);
+            await _context.SaveChangesAsync();
+            return true;
+        }
     }
 }

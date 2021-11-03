@@ -12,5 +12,7 @@ namespace DaytaCare.Services
         Task<Daycare> GetById(int id);
 
         Task Insert(Daycare daycare);
+
+        Task<bool> TryDelete(int id);
     }
 }

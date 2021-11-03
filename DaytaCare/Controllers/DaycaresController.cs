@@ -91,14 +91,12 @@ namespace DaytaCare.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteDaycare(int id)
         {
-            var daycare = await _context.Daycares.FindAsync(id);
-            if (daycare == null)
+            var deleteSucceeded = await daycares.TryDelete(id);
+
+            if (!deleteSucceeded)
             {
                 return NotFound();
             }
-
-            _context.Daycares.Remove(daycare);
-            await _context.SaveChangesAsync();
 
             return NoContent();
         }
