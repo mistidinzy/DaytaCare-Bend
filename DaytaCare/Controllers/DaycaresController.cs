@@ -74,7 +74,6 @@ namespace DaytaCare.Controllers
         [HttpPost]
         public async Task<ActionResult<Daycare>> PostDaycare(Daycare daycare)
         {
-
             await daycares.Insert(daycare);
 
             return CreatedAtAction("GetDaycare", new { id = daycare.Id }, daycare);
