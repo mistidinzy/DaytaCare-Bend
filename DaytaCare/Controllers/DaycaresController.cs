@@ -35,7 +35,7 @@ namespace DaytaCare.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<Daycare>> GetDaycare(int id)
         {
-            var daycare = await _context.Daycares.FindAsync(id);
+            var daycare = await daycares.GetById(id);
 
             if (daycare == null)
             {

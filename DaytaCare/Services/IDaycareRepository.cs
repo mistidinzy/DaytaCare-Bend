@@ -8,5 +8,7 @@ namespace DaytaCare.Services
     public interface IDaycareRepository
     {
         Task<List<Daycare>> GetAll();
+
+        Task<Daycare> GetById(int id);
     }
 }

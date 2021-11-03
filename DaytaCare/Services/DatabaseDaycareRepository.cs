@@ -20,5 +20,10 @@ namespace DaytaCare.Services
         {
             return await _context.Daycares.ToListAsync();
         }
+
+        public async Task<Daycare> GetById(int id)
+        {
+            return await _context.Daycares.FindAsync(id);
+        }
     }
 }
