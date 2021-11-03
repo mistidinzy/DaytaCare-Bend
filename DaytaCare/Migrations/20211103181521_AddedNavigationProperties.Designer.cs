@@ -4,14 +4,16 @@ using DaytaCare.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace DaytaCare.Migrations
 {
     [DbContext(typeof(DaytaCareDbContext))]
-    partial class DaytaCareDbContextModelSnapshot : ModelSnapshot
+    [Migration("20211103181521_AddedNavigationProperties")]
+    partial class AddedNavigationProperties
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

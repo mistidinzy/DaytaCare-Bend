@@ -99,15 +99,5 @@ namespace DaytaCare.Controllers
         {
             return _context.Daycares.Any(e => e.Id == id);
         }
-
-        [Authorize("Administrator, Daycare Provider")]
-        [HttpPost]
-        public async Task<ActionResult<Daycare>> AddDaycareAmenity(Daycare amenity)
-        {
-
-            await daycares.Insert(daycare);
-
-            return CreatedAtAction("GetDaycare", new { id = daycare.Id }, daycare);
-        }
     }
 }
