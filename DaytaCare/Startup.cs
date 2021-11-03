@@ -84,12 +84,14 @@ namespace DaytaCare
 
             app.UseEndpoints(endpoints =>
             {
+              endpoints.MapControllers();
+
                 endpoints.MapGet("/", async context =>
                 {
                     var req = context.Request;
                     var res = context.Response;
 
-                    await context.Response.WriteAsync("Hello World!");
+                    context.Response.Redirect("/docs");
                 });
             });
         }
