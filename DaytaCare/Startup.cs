@@ -39,15 +39,16 @@ namespace DaytaCare
             });
 
 
-      //Identity!!!
-      services.AddIdentity<ApplicationUser, IdentityRole>(options =>
-      {
-        //Configure password requirements, etc.
-        options.User.RequireUniqueEmail = true;
-      })
-        .AddEntityFrameworkStores<DaytaCareDbContext>();
+            //Identity!!!
+            services.AddIdentity<ApplicationUser, IdentityRole>(options =>
+            {
+          //Configure password requirements, etc.
+          options.User.RequireUniqueEmail = true;
+            })
+              .AddEntityFrameworkStores<DaytaCareDbContext>();
 
-      services.AddScoped<IUserService, IdentityUserService>();
+            services.AddScoped<IUserService, IdentityUserService>();
+            services.AddSingleton<JwtService>();
 
 
             services.AddControllers();
@@ -71,11 +72,13 @@ namespace DaytaCare
                 app.UseDeveloperExceptionPage();
             }
 
-            app.UseSwagger(options => {
+            app.UseSwagger(options =>
+            {
                 options.RouteTemplate = "/api/{documentName}/swagger.json";
             });
 
-            app.UseSwaggerUI(options => {
+            app.UseSwaggerUI(options =>
+            {
                 options.SwaggerEndpoint("/api/v1/swagger.json", "Dayta Care");
                 options.RoutePrefix = "docs";
             });

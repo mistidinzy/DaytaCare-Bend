@@ -23,7 +23,6 @@ namespace DaytaCare.Data
 
             modelBuilder.Entity<DaycareAmenity>()
                 .HasKey(da => new { da.DaycareId, da.AmenityId });
-    }
-
+        }
     }
 }
