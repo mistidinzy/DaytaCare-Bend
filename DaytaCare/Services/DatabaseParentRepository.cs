@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace DaytaCare.Services
 {
-    public class DatabaseParentRepository
+    public class DatabaseParentRepository : IParentRepository
     {
         private readonly DaytaCareDbContext context;
 

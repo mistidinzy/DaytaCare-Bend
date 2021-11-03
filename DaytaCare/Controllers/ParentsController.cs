@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using DaytaCare.Models;
 using DaytaCare.Models.DTO;
+using DaytaCare.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -17,6 +18,11 @@ namespace DaytaCare.Controllers
     [ApiController]
     public class ParentsController : ControllerBase
     {
-        
+        private readonly IParentRepository daycares;
+
+        public async Task<ActionResult<List<Daycare>>> Search(ParentSearchDto filter)
+        {
+            return await daycares.Search();
+        }
     }
 }
