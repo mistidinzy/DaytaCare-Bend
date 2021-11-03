@@ -2,8 +2,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+
 using DaytaCare.Data;
 using DaytaCare.Models.Identity;
+using DaytaCare.Services;
 using DaytaCare.Services.Identity;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
@@ -43,8 +45,8 @@ namespace DaytaCare
             //Identity!!!
             services.AddIdentity<ApplicationUser, IdentityRole>(options =>
             {
-          //Configure password requirements, etc.
-          options.User.RequireUniqueEmail = true;
+                //Configure password requirements, etc.
+                options.User.RequireUniqueEmail = true;
             })
               .AddEntityFrameworkStores<DaytaCareDbContext>();
 
@@ -62,6 +64,8 @@ namespace DaytaCare
             {
                 options.TokenValidationParameters = JwtService.GetValidationParameters(Configuration);
             });
+
+            services.AddScoped<IDaycareRepository, DatabaseDaycareRepository>();
 
             services.AddControllers();
 
