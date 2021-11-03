@@ -34,6 +34,6 @@ namespace DaytaCare.Models
 
         public int LicenseNumber { get; set; }
 
-        public DaycareAmenity DaycareAmenity { get; set; }
+        //public DaycareAmenity DaycareAmenity { get; set; }
     }
 }
