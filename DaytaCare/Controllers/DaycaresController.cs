@@ -35,7 +35,7 @@ namespace DaytaCare.Controllers
         }
 
         // GET: api/Daycares/5
-        [AllowAnonymous]
+        [Authorize(Roles = "Administrator")]
         [HttpGet("{id}")]
         public async Task<ActionResult<Daycare>> GetDaycare(int id)
         {
