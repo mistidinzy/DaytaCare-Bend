@@ -7,6 +7,7 @@ using DaytaCare.Data;
 using DaytaCare.Models.Identity;
 using DaytaCare.Services;
 using DaytaCare.Services.Identity;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -41,17 +42,30 @@ namespace DaytaCare
             });
 
 
-      //Identity!!!
-      services.AddIdentity<ApplicationUser, IdentityRole>(options =>
-      {
-        //Configure password requirements, etc.
-        options.User.RequireUniqueEmail = true;
-      })
-        .AddEntityFrameworkStores<DaytaCareDbContext>();
+            //Identity!!!
+            services.AddIdentity<ApplicationUser, IdentityRole>(options =>
+            {
+                //Configure password requirements, etc.
+                options.User.RequireUniqueEmail = true;
+            })
+              .AddEntityFrameworkStores<DaytaCareDbContext>();
 
-      services.AddScoped<IUserService, IdentityUserService>();
+            services.AddScoped<IUserService, IdentityUserService>();
+            services.AddScoped<JwtService>();
 
-      services.AddScoped<IDaycareRepository, DatabaseDaycareRepository>();
+            services.AddAuthentication(options =>
+            {
+                options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+
+            })
+            .AddJwtBearer(options =>
+            {
+                options.TokenValidationParameters = JwtService.GetValidationParameters(Configuration);
+            });
+
+            services.AddScoped<IDaycareRepository, DatabaseDaycareRepository>();
 
             services.AddControllers();
 
@@ -74,16 +88,21 @@ namespace DaytaCare
                 app.UseDeveloperExceptionPage();
             }
 
-            app.UseSwagger(options => {
+            app.UseSwagger(options =>
+            {
                 options.RouteTemplate = "/api/{documentName}/swagger.json";
             });
 
-            app.UseSwaggerUI(options => {
+            app.UseSwaggerUI(options =>
+            {
                 options.SwaggerEndpoint("/api/v1/swagger.json", "Dayta Care");
                 options.RoutePrefix = "docs";
             });
 
             app.UseRouting();
+
+            app.UseAuthentication();
+            app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
 

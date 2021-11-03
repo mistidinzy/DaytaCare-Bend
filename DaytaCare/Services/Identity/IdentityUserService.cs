@@ -1,4 +1,5 @@
 using DaytaCare.Controllers;
+using DaytaCare.Models.DTO;
 using DaytaCare.Models.Identity;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -10,74 +11,94 @@ using System.Threading.Tasks;
 
 namespace DaytaCare.Services.Identity
 {
-  public class IdentityUserService : IUserService
-  {
-    private readonly UserManager<ApplicationUser> userManager;
-    public IdentityUserService(UserManager<ApplicationUser> userManager)
+    public class IdentityUserService : IUserService
     {
-      this.userManager = userManager;
+        private readonly UserManager<ApplicationUser> userManager;
+        private readonly JwtService jwtService;
+
+        public IdentityUserService(UserManager<ApplicationUser> userManager, JwtService jwtService)
+        {
+            this.userManager = userManager;
+            this.jwtService = jwtService;
+        }
+
+        public async Task<UserDTO> Authenticate(LoginData data)
+        {
+            var user = await userManager.FindByNameAsync(data.Username);
+            if (!await userManager.CheckPasswordAsync(user, data.Password))
+                return null;
+
+            return await CreateUserDTOAsync(user);
+        }
+
+        public async Task<ApplicationUser> DaycareRegister(DaycareRegisterData data, ModelStateDictionary modelState)
+        {
+            var user = new ApplicationUser
+            {
+                UserName = data.Username,
+                Name = data.Name,
+                LicenseNumber = data.LicenseNumber,
+                Email = data.Email,
+                StreetAddress = data.StreetAddress,
+                City = data.City,
+                State = data.State,
+                Zip = data.Zip,
+                PhoneNumber = data.Phone,
+                Price = data.Price,
+            };
+            var result = await userManager.CreateAsync(user, data.Password);
+
+            if (result.Succeeded)
+            {
+                return user;
+            }
+            foreach (var error in result.Errors)
+            {
+                var errorKey =
+                  error.Code.Contains("Password") ? nameof(data.Password) :
+                  error.Code.Contains("Email") ? nameof(data.Email) :
+                  error.Code.Contains("UserName") ? nameof(data.Username) :
+                  "";
+                modelState.AddModelError(errorKey, error.Description);
+            }
+            return null;
+        }
+
+        public async Task<UserDTO> Register(RegisterData data, ModelStateDictionary modelState)
+        {
+            var user = new ApplicationUser
+            {
+                Email = data.Email,
+                UserName = data.Username,
+            };
+            var result = await userManager.CreateAsync(user, data.Password);
+
+            if (result.Succeeded)
+            {
+                return await CreateUserDTOAsync(user);
+            }
+            foreach (var error in result.Errors)
+            {
+                var errorKey =
+                    error.Code.Contains("Password") ? nameof(data.Password) :
+                    error.Code.Contains("Email") ? nameof(data.Email) :
+                    error.Code.Contains("UserName") ? nameof(data.Username) :
+                    "";
+                modelState.AddModelError(errorKey, error.Description);
+            }
+            return null;
+        }
+
+        private async Task<UserDTO> CreateUserDTOAsync(ApplicationUser user)
+        {
+            return new UserDTO
+            {
+                UserId = user.Id,
+                Email = user.Email,
+                Username = user.UserName,
+
+                Token = await jwtService.GetToken(user, TimeSpan.FromMinutes(5)),
+            };
+        }
     }
-
-    public async Task<ApplicationUser> DaycareRegister ( DaycareRegisterData data, ModelStateDictionary modelState )
-    {
-      var user = new ApplicationUser
-      {
-        UserName = data.Username,
-        Name = data.Name,
-        LicenseNumber = data.LicenseNumber,
-        Email = data.Email,
-        StreetAddress = data.StreetAddress,
-        City = data.City,
-        State = data.State,
-        Zip = data.Zip,
-        PhoneNumber = data.Phone,
-        Price = data.Price,
-      };
-      var result = await userManager.CreateAsync(user, data.Password);
-
-      if(result.Succeeded)
-      {
-        return user;
-      }
-      foreach (var error in result.Errors)
-      {
-        var errorKey =
-          error.Code.Contains("Password") ? nameof(data.Password) :
-          error.Code.Contains("Email") ? nameof(data.Email) :
-          error.Code.Contains("UserName") ? nameof(data.Username) :
-          "";
-        modelState.AddModelError(errorKey, error.Description);
-      }
-      return null;
-    }
-
-    public async Task<ApplicationUser> Register (RegisterData data, ModelStateDictionary modelState )
-    {
-      var user = new ApplicationUser
-      {
-        Email = data.Email,
-        UserName = data.Username,
-      };
-      var result = await userManager.CreateAsync(user, data.Password);
-
-      if(result.Succeeded)
-      {
-        return user;
-      }
-      foreach (var error in result.Errors)
-      {
-        var errorKey =
-            error.Code.Contains("Password") ? nameof(data.Password) :
-            error.Code.Contains("Email") ? nameof(data.Email) :
-            error.Code.Contains("UserName") ? nameof(data.Username) :
-            "";
-        modelState.AddModelError(errorKey, error.Description);
-      }
-      return null;
-    }
-  }
 }
-
-
-
-
