@@ -28,7 +28,7 @@ namespace DaytaCare.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Daycare>>> GetDaycares()
         {
-            return await _context.Daycares.ToListAsync();
+            return await daycares.GetAll();
         }
 
         // GET: api/Daycares/5
