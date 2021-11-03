@@ -25,5 +25,11 @@ namespace DaytaCare.Services
         {
             return await _context.Daycares.FindAsync(id);
         }
+
+        public async Task Insert(Daycare daycare)
+        {
+            _context.Daycares.Add(daycare);
+            await _context.SaveChangesAsync();
+        }
     }
 }
