@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+
 using DaytaCare.Data;
 using DaytaCare.Models.Identity;
 using DaytaCare.Services;
@@ -52,7 +53,6 @@ namespace DaytaCare
 
       services.AddScoped<IDaycareRepository, DatabaseDaycareRepository>();
 
-
             services.AddControllers();
 
             services.AddSwaggerGen(options =>
@@ -86,8 +86,10 @@ namespace DaytaCare
             app.UseRouting();
 
             app.UseEndpoints(endpoints =>
+
             {
                 endpoints.MapControllers();
+
                 endpoints.MapGet("/", async context =>
                 {
                     var req = context.Request;
