@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using DaytaCare.Data;
 using DaytaCare.Models;
+using DaytaCare.Services;
 
 namespace DaytaCare.Controllers
 {
@@ -14,10 +15,12 @@ namespace DaytaCare.Controllers
     [ApiController]
     public class DaycaresController : ControllerBase
     {
+        private readonly IDaycareRepository daycares;
         private readonly DaytaCareDbContext _context;
 
-        public DaycaresController(DaytaCareDbContext context)
+        public DaycaresController(IDaycareRepository daycares, DaytaCareDbContext context)
         {
+            this.daycares = daycares;
             _context = context;
         }
 
