@@ -55,22 +55,9 @@ namespace DaytaCare.Controllers
                 return BadRequest();
             }
 
-            _context.Entry(daycare).State = EntityState.Modified;
-
-            try
+            if (!await daycares.TryUpdate(daycare))
             {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!DaycareExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
+                return NotFound();
             }
 
             return NoContent();
