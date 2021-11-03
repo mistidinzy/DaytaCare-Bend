@@ -100,12 +100,19 @@ namespace DaytaCare.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<DaycareAmenity>> AddDaycareAmenity(int id, int amenityId)
+        public async Task<ActionResult<DaycareAmenity>> PostAmenity(int id, int amenityId)
         {
-            await 
+            await daycares.AddAmenity(id, amenityId);
 
-            return 
+            return NoContent();
         }
 
+        [HttpDelete]
+        public async Task<ActionResult<DaycareAmenity>> DeleteAmenity(int id, int amenityId)
+        {
+            await daycares.DeleteAmenity(id, amenityId);
+
+            return NoContent();
+        }
     }
 }

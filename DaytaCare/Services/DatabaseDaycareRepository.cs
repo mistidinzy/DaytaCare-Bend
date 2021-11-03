@@ -33,14 +33,6 @@ namespace DaytaCare.Services
             await _context.SaveChangesAsync();
         }
 
-        public async Task Insert(Amenity daycareAmenity)
-        {
-            //throw new NotImplementedException();
-            _context.Amenities.Add(daycareAmenity);
-            await _context.SaveChangesAsync();
-
-        }
-
         public async Task<bool> TryDelete(int id)
         {
             var daycare = await _context.Daycares.FindAsync(id);
@@ -74,13 +66,37 @@ namespace DaytaCare.Services
                     throw;
                 }
             }
-
             return true;
         }
 
         private bool DaycareExists(int id)
         {
             return _context.Daycares.Any(e => e.Id == id);
+        }
+
+        public async Task AddAmenity(int daycareId, int amenityId)
+        {
+            var daycareAmenity = await _context.DaycareAmenities
+
+                .FirstOrDefaultAsync(e =>
+                    e.DaycareId == daycareId &&
+                    e.AmenityId == amenityId);
+
+            _context.DaycareAmenities.Add(daycareAmenity);
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task DeleteAmenity(int daycareId, int amenityId)
+        {
+            var daycareAmenity = await _context.DaycareAmenities
+
+                .FirstOrDefaultAsync(e =>
+                    e.DaycareId == daycareId &&
+                    e.AmenityId == amenityId);
+
+            _context.DaycareAmenities.Remove(daycareAmenity);
+            await _context.SaveChangesAsync();
+
         }
     }
 }

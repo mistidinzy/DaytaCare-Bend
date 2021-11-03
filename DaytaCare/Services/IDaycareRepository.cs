@@ -17,6 +17,8 @@ namespace DaytaCare.Services
 
         Task<bool> TryUpdate(Daycare daycare);
 
-        Task Insert(Amenity daycareAmenity);
+        Task AddAmenity(int daycareId, int amenityId);
+
+        Task DeleteAmenity(int daycareId, int amenityId);
     }
 }
