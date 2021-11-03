@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Linq;
+
 namespace DaytaCare.Models.DTO
 {
     public class ParentSearchDto
@@ -6,5 +8,6 @@ namespace DaytaCare.Models.DTO
         public string City { get; set; }
 
         public string State { get; set; }
+     
     }
 }
