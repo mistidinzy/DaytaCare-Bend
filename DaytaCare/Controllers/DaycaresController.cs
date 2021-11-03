@@ -12,7 +12,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace DaytaCare.Controllers
 {
-    [Authorize(Roles = "Administrator, Daycare Provider, Parent")]
+    //[Authorize(Roles = "Administrator, Daycare Provider, Parent")]
     [Route("api/[controller]")]
     [ApiController]
     public class DaycaresController : ControllerBase
@@ -27,7 +27,7 @@ namespace DaytaCare.Controllers
         }
 
         // GET: api/Daycares
-        [AllowAnonymous]
+        //[AllowAnonymous]
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Daycare>>> GetDaycares()
         {
@@ -35,7 +35,7 @@ namespace DaytaCare.Controllers
         }
 
         // GET: api/Daycares/5
-        [Authorize(Roles = "Administrator")]
+        //[Authorize(Roles = "Administrator")]
         [HttpGet("{id}")]
         public async Task<ActionResult<Daycare>> GetDaycare(int id)
         {
@@ -51,7 +51,7 @@ namespace DaytaCare.Controllers
 
         // PUT: api/Daycares/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [Authorize("Administator, Daycare Provider")]
+        //[Authorize("Administator, Daycare Provider")]
         [HttpPut("{id}")]
         public async Task<IActionResult> PutDaycare(int id, Daycare daycare)
         {
@@ -70,18 +70,17 @@ namespace DaytaCare.Controllers
 
         // POST: api/Daycares
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [Authorize("Administrator, Daycare Provider")]
+        //[Authorize("Administrator, Daycare Provider")]
         [HttpPost]
         public async Task<ActionResult<Daycare>> PostDaycare(Daycare daycare)
         {
-
             await daycares.Insert(daycare);
 
             return CreatedAtAction("GetDaycare", new { id = daycare.Id }, daycare);
         }
 
         // DELETE: api/Daycares/5
-        [Authorize("Administrator")]
+        //[Authorize("Administrator")]
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteDaycare(int id)
         {
@@ -98,6 +97,24 @@ namespace DaytaCare.Controllers
         private bool DaycareExists(int id)
         {
             return _context.Daycares.Any(e => e.Id == id);
+        }
+
+        [HttpPost]
+        [Route("{id}/Amenities/{amenityId}")]
+        public async Task<ActionResult<DaycareAmenity>> PostAmenity(int id, int amenityId)
+        {
+            await daycares.AddAmenity(id, amenityId);
+
+            return NoContent();
+        }
+
+        [HttpDelete]
+        [Route("{id}/Amenities/{amenityId}")]
+        public async Task<ActionResult<DaycareAmenity>> DeleteAmenity(int id, int amenityId)
+        {
+            await daycares.DeleteAmenity(id, amenityId);
+
+            return NoContent();
         }
     }
 }
