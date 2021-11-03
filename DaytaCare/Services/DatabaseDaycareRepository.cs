@@ -76,11 +76,11 @@ namespace DaytaCare.Services
 
         public async Task AddAmenity(int id, int amenityId)
         {
-            var daycareAmenity = await _context.DaycareAmenities
-
-                .FirstOrDefaultAsync(e =>
-                    e.DaycareId == id &&
-                    e.AmenityId == amenityId);
+            var daycareAmenity = new DaycareAmenity
+            {
+                DaycareId = id,
+                AmenityId = amenityId,
+            };
 
             _context.DaycareAmenities.Add(daycareAmenity);
             await _context.SaveChangesAsync();
