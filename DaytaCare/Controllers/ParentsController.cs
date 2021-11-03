@@ -17,21 +17,6 @@ namespace DaytaCare.Controllers
     [ApiController]
     public class ParentsController : ControllerBase
     {
-        private readonly object context;
-
-        public async Task<ActionResult<List<Daycare>>> Search(ParentSearchDto filter)
-        {
-
-            IQueryable<Daycare> query = context.Daycares;
-
-            if (filter.City != null)
-                query = query.Where(d => d.City == filter.City);
-
-            if (filter.State != null)
-                query = query.Where(d => d.State == filter.State);
-
-            List<Daycare> results = await query.ToListAsync();
-
-        } 
+        
     }
 }
