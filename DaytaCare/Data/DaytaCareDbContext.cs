@@ -3,6 +3,7 @@ using DaytaCare.Models.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using DaytaCare.Models;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity;
 
 namespace DaytaCare.Data
 {
@@ -22,8 +23,26 @@ namespace DaytaCare.Data
             base.OnModelCreating(modelBuilder);
 
             modelBuilder.Entity<DaycareAmenity>()
-                .HasKey(da => new { da.DaycareId, da.AmenityId });
-    }
+                .HasKey(da => new { da.DaycareId, da.AmenityId }
 
+            );
+
+            SeedRole(modelBuilder, "Administrator");
+            SeedRole(modelBuilder, "Parent");
+            SeedRole(modelBuilder, "Daycare Provider");
+        }
+
+        private void SeedRole(ModelBuilder modelBuilder, string roleName)
+        {
+            var role = new IdentityRole
+            {
+                Id = roleName,
+                Name = roleName,
+                NormalizedName = roleName.ToUpper(),
+                ConcurrencyStamp = Guid.Empty.ToString(),
+            };
+
+            modelBuilder.Entity<IdentityRole>().HasData(role);
+        }
     }
 }
