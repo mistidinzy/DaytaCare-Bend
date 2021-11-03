@@ -51,7 +51,7 @@ namespace DaytaCare
               .AddEntityFrameworkStores<DaytaCareDbContext>();
 
             services.AddScoped<IUserService, IdentityUserService>();
-            services.AddSingleton<JwtService>();
+            services.AddScoped<JwtService>();
 
             services.AddAuthentication(options =>
             {
