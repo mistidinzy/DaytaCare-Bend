@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using DaytaCare.Data;
 using DaytaCare.Models;
@@ -44,5 +45,35 @@ namespace DaytaCare.Services
             await _context.SaveChangesAsync();
             return true;
         }
+
+        public async Task<bool> TryUpdate(Daycare daycare)
+        {
+            _context.Entry(daycare).State = EntityState.Modified;
+
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!DaycareExists(daycare.Id))
+                {
+                    return false;
+                }
+                else
+                {
+                    throw;
+                }
+            }
+
+            return true;
+        }
+
+        private bool DaycareExists(int id)
+        {
+            return _context.Daycares.Any(e => e.Id == id);
+        }
     }
 }
+
