@@ -8,5 +8,6 @@ namespace DaytaCare.Services.Identity
   public interface IUserService
   {
     Task<ApplicationUser> Register ( RegisterData data, ModelStateDictionary modelState );
+    Task <ApplicationUser> DaycareRegister ( DaycareRegisterData data, ModelStateDictionary modelState );
   }
 }
