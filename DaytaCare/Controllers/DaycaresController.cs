@@ -100,6 +100,7 @@ namespace DaytaCare.Controllers
         }
 
         [HttpPost]
+        [Route("{id}/Amenities/{amenityId}")]
         public async Task<ActionResult<DaycareAmenity>> PostAmenity(int id, int amenityId)
         {
             await daycares.AddAmenity(id, amenityId);
@@ -108,6 +109,7 @@ namespace DaytaCare.Controllers
         }
 
         [HttpDelete]
+        [Route("{id}/Amenities/{amenityId}")]
         public async Task<ActionResult<DaycareAmenity>> DeleteAmenity(int id, int amenityId)
         {
             await daycares.DeleteAmenity(id, amenityId);
