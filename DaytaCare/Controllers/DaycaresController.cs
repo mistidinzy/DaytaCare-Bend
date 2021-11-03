@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using DaytaCare.Data;
 using DaytaCare.Models;
+using DaytaCare.Services;
 
 namespace DaytaCare.Controllers
 {
@@ -14,10 +15,12 @@ namespace DaytaCare.Controllers
     [ApiController]
     public class DaycaresController : ControllerBase
     {
+        private readonly IDaycareRepository daycares;
         private readonly DaytaCareDbContext _context;
 
-        public DaycaresController(DaytaCareDbContext context)
+        public DaycaresController(IDaycareRepository daycares, DaytaCareDbContext context)
         {
+            this.daycares = daycares;
             _context = context;
         }
 
@@ -25,14 +28,14 @@ namespace DaytaCare.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Daycare>>> GetDaycares()
         {
-            return await _context.Daycares.ToListAsync();
+            return await daycares.GetAll();
         }
 
         // GET: api/Daycares/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Daycare>> GetDaycare(int id)
         {
-            var daycare = await _context.Daycares.FindAsync(id);
+            var daycare = await daycares.GetById(id);
 
             if (daycare == null)
             {
@@ -52,22 +55,9 @@ namespace DaytaCare.Controllers
                 return BadRequest();
             }
 
-            _context.Entry(daycare).State = EntityState.Modified;
-
-            try
+            if (!await daycares.TryUpdate(daycare))
             {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!DaycareExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
+                return NotFound();
             }
 
             return NoContent();
@@ -78,8 +68,8 @@ namespace DaytaCare.Controllers
         [HttpPost]
         public async Task<ActionResult<Daycare>> PostDaycare(Daycare daycare)
         {
-            _context.Daycares.Add(daycare);
-            await _context.SaveChangesAsync();
+
+            await daycares.Insert(daycare);
 
             return CreatedAtAction("GetDaycare", new { id = daycare.Id }, daycare);
         }
@@ -88,14 +78,12 @@ namespace DaytaCare.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteDaycare(int id)
         {
-            var daycare = await _context.Daycares.FindAsync(id);
-            if (daycare == null)
+            var deleteSucceeded = await daycares.TryDelete(id);
+
+            if (!deleteSucceeded)
             {
                 return NotFound();
             }
-
-            _context.Daycares.Remove(daycare);
-            await _context.SaveChangesAsync();
 
             return NoContent();
         }
