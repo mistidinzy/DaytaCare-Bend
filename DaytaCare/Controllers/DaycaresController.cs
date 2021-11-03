@@ -8,9 +8,11 @@ using Microsoft.EntityFrameworkCore;
 using DaytaCare.Data;
 using DaytaCare.Models;
 using DaytaCare.Services;
+using Microsoft.AspNetCore.Authorization;
 
 namespace DaytaCare.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class DaycaresController : ControllerBase

@@ -7,9 +7,11 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using DaytaCare.Data;
 using DaytaCare.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace DaytaCare.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class AmenityController : ControllerBase
