@@ -26,7 +26,7 @@ namespace DaytaCare.Controllers
       if (user == null)
         return BadRequest(new ValidationProblemDetails(ModelState)
           );
-      return Ok();
+      return Ok(user);
     }
   }
 }
