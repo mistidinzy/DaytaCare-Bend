@@ -22,6 +22,20 @@ namespace DaytaCare.Services.Identity
             this.jwtService = jwtService;
         }
 
+        public async Task<UserDTO> Authenticate(LoginData data)
+        {
+            var user = await userManager.FindByNameAsync(data.Username);
+            if (!await userManager.CheckPasswordAsync(user, data.Password))
+                return null;
+
+            return new UserDTO
+            {
+                UserId = user.Id,
+                Username = user.UserName,
+                Email = user.Email,
+            };
+        }
+
         public async Task<ApplicationUser> DaycareRegister(DaycareRegisterData data, ModelStateDictionary modelState)
         {
             var user = new ApplicationUser
