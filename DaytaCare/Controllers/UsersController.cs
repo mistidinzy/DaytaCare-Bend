@@ -1,6 +1,7 @@
 using DaytaCare.Models.DTO;
 using DaytaCare.Models.Identity;
 using DaytaCare.Services.Identity;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -49,6 +50,14 @@ namespace DaytaCare.Controllers
                 return BadRequest(new ValidationProblemDetails(ModelState)
                   );
             return Ok(user);
+        }
+
+        [Authorize]
+        [HttpGet("[action]")]
+        public async Task<ActionResult<UserDTO>> Self()
+        {
+            var user = this.User;
+            return Ok();
         }
     }
 }
