@@ -74,29 +74,28 @@ namespace DaytaCare.Services
             return _context.Daycares.Any(e => e.Id == id);
         }
 
-        public async Task AddAmenity(int daycareId, int amenityId)
+        public async Task AddAmenity(int id, int amenityId)
         {
             var daycareAmenity = await _context.DaycareAmenities
 
                 .FirstOrDefaultAsync(e =>
-                    e.DaycareId == daycareId &&
+                    e.DaycareId == id &&
                     e.AmenityId == amenityId);
 
             _context.DaycareAmenities.Add(daycareAmenity);
             await _context.SaveChangesAsync();
         }
 
-        public async Task DeleteAmenity(int daycareId, int amenityId)
+        public async Task DeleteAmenity(int id, int amenityId)
         {
             var daycareAmenity = await _context.DaycareAmenities
 
                 .FirstOrDefaultAsync(e =>
-                    e.DaycareId == daycareId &&
+                    e.DaycareId == id &&
                     e.AmenityId == amenityId);
 
             _context.DaycareAmenities.Remove(daycareAmenity);
             await _context.SaveChangesAsync();
-
         }
     }
 }

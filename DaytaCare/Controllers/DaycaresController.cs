@@ -101,18 +101,18 @@ namespace DaytaCare.Controllers
 
         [HttpPost]
         [Route("{id}/Amenities/{amenityId}")]
-        public async Task<ActionResult<DaycareAmenity>> PostAmenity(int Id, int amenityId)
+        public async Task<ActionResult<DaycareAmenity>> PostAmenity(int id, int amenityId)
         {
-            await daycares.AddAmenity(Id, amenityId);
+            await daycares.AddAmenity(id, amenityId);
 
             return NoContent();
         }
 
         [HttpDelete]
         [Route("{id}/Amenities/{amenityId}")]
-        public async Task<ActionResult<DaycareAmenity>> DeleteAmenity(int Id, int amenityId)
+        public async Task<ActionResult<DaycareAmenity>> DeleteAmenity(int id, int amenityId)
         {
-            await daycares.DeleteAmenity(Id, amenityId);
+            await daycares.DeleteAmenity(id, amenityId);
 
             return NoContent();
         }
