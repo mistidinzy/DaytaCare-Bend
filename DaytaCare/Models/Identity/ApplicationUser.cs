@@ -10,10 +10,10 @@ namespace DaytaCare.Models.Identity
 {
   public class ApplicationUser : IdentityUser
   {
-    [Required]
+    //[Required]
     public string FirstName {get; set;}
 
-    [Required]
+    //[Required]
     public string LastName { get; set; }
 
   }

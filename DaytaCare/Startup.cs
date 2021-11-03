@@ -83,8 +83,10 @@ namespace DaytaCare
             app.UseRouting();
 
             app.UseEndpoints(endpoints =>
+
             {
                 endpoints.MapControllers();
+
                 endpoints.MapGet("/", async context =>
                 {
                     var req = context.Request;
