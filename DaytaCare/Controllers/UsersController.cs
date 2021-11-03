@@ -28,5 +28,15 @@ namespace DaytaCare.Controllers
           );
       return Ok(user);
     }
+
+    [HttpPost ("DaycareRegister")]
+    public async Task<IActionResult>DaycareRegister(DaycareRegisterData data)
+    {
+      var user = await userService.DaycareRegister(data, this.ModelState);
+      if (user == null)
+        return BadRequest(new ValidationProblemDetails(ModelState)
+          );
+      return Ok(user);
+    }
   }
 }
