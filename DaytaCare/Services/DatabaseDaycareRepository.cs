@@ -33,6 +33,14 @@ namespace DaytaCare.Services
             await _context.SaveChangesAsync();
         }
 
+        public async Task Insert(Amenity daycareAmenity)
+        {
+            //throw new NotImplementedException();
+            _context.Amenities.Add(daycareAmenity);
+            await _context.SaveChangesAsync();
+
+        }
+
         public async Task<bool> TryDelete(int id)
         {
             var daycare = await _context.Daycares.FindAsync(id);

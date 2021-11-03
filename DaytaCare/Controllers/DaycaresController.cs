@@ -98,5 +98,14 @@ namespace DaytaCare.Controllers
         {
             return _context.Daycares.Any(e => e.Id == id);
         }
+
+        [HttpPost]
+        public async Task<ActionResult<DaycareAmenity>> AddDaycareAmenity(int id, int amenityId)
+        {
+            await 
+
+            return 
+        }
+
     }
 }
