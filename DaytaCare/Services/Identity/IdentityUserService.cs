@@ -1,4 +1,5 @@
 using DaytaCare.Controllers;
+using DaytaCare.Models.DTO;
 using DaytaCare.Models.Identity;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -22,7 +23,7 @@ namespace DaytaCare.Services.Identity
             this.jwtService = jwtService;
         }
 
-        public async Task<ApplicationUser> Register(RegisterData data, ModelStateDictionary modelState)
+        public async Task<UserDTO> Register(RegisterData data, ModelStateDictionary modelState)
         {
             var user = new ApplicationUser
             {
@@ -33,7 +34,12 @@ namespace DaytaCare.Services.Identity
 
             if (result.Succeeded)
             {
-                return user;
+                return new UserDTO
+                {
+                    UserId = user.Id,
+                    Email = user.Email,
+                    Username = user.UserName,
+                };
             }
             foreach (var error in result.Errors)
             {
