@@ -7,9 +7,11 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using DaytaCare.Data;
 using DaytaCare.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace DaytaCare.Controllers
 {
+    [Authorize("Administrator")]
     [Route("api/[controller]")]
     [ApiController]
     public class AmenityController : ControllerBase
@@ -22,6 +24,7 @@ namespace DaytaCare.Controllers
         }
 
         // GET: api/Amenity
+        [AllowAnonymous]
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Amenity>>> GetAmenities()
         {
