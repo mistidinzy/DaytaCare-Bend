@@ -28,12 +28,7 @@ namespace DaytaCare.Services.Identity
             if (!await userManager.CheckPasswordAsync(user, data.Password))
                 return null;
 
-            return new UserDTO
-            {
-                UserId = user.Id,
-                Username = user.UserName,
-                Email = user.Email,
-            };
+            return await CreateUserDTOAsync(user);
         }
 
         public async Task<ApplicationUser> DaycareRegister(DaycareRegisterData data, ModelStateDictionary modelState)
@@ -80,12 +75,7 @@ namespace DaytaCare.Services.Identity
 
             if (result.Succeeded)
             {
-                return new UserDTO
-                {
-                    UserId = user.Id,
-                    Email = user.Email,
-                    Username = user.UserName,
-                };
+                return await CreateUserDTOAsync(user);
             }
             foreach (var error in result.Errors)
             {
@@ -97,6 +87,18 @@ namespace DaytaCare.Services.Identity
                 modelState.AddModelError(errorKey, error.Description);
             }
             return null;
+        }
+
+        private async Task<UserDTO> CreateUserDTOAsync(ApplicationUser user)
+        {
+            return new UserDTO
+            {
+                UserId = user.Id,
+                Email = user.Email,
+                Username = user.UserName,
+
+                Token = await jwtService.GetToken(user, TimeSpan.FromMinutes(5)),
+            };
         }
     }
 }
