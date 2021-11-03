@@ -30,6 +30,9 @@ namespace DaytaCare.Services
                 query = query.Where(d => d.State == filter.State);
 
             List<Daycare> results = await query.ToListAsync();
+
+            return results;
         }
     }
 }
+

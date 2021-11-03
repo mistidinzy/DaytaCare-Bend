@@ -13,16 +13,19 @@ using Microsoft.EntityFrameworkCore;
 
 namespace DaytaCare.Controllers
 {
-    [Authorize("Administrator, Parent")]
+    //[Authorize("Administrator, Parent")]
     [Route("api/[controller]")]
     [ApiController]
+
+
     public class ParentsController : ControllerBase
     {
         private readonly IParentRepository daycares;
 
+        [HttpGet]
         public async Task<ActionResult<List<Daycare>>> Search(ParentSearchDto filter)
         {
-            return await daycares.Search();
+            return await daycares.Search(filter);
         }
     }
 }
