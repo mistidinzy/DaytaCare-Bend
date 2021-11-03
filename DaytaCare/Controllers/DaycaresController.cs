@@ -12,7 +12,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace DaytaCare.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = "Administrator, Daycare Provider, Parent")]
     [Route("api/[controller]")]
     [ApiController]
     public class DaycaresController : ControllerBase
@@ -27,6 +27,7 @@ namespace DaytaCare.Controllers
         }
 
         // GET: api/Daycares
+        [AllowAnonymous]
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Daycare>>> GetDaycares()
         {
@@ -34,6 +35,7 @@ namespace DaytaCare.Controllers
         }
 
         // GET: api/Daycares/5
+        [AllowAnonymous]
         [HttpGet("{id}")]
         public async Task<ActionResult<Daycare>> GetDaycare(int id)
         {
@@ -49,6 +51,7 @@ namespace DaytaCare.Controllers
 
         // PUT: api/Daycares/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        [Authorize("Administator, Daycare Provider")]
         [HttpPut("{id}")]
         public async Task<IActionResult> PutDaycare(int id, Daycare daycare)
         {
@@ -67,6 +70,7 @@ namespace DaytaCare.Controllers
 
         // POST: api/Daycares
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        [Authorize("Administrator, Daycare Provider")]
         [HttpPost]
         public async Task<ActionResult<Daycare>> PostDaycare(Daycare daycare)
         {
@@ -77,6 +81,7 @@ namespace DaytaCare.Controllers
         }
 
         // DELETE: api/Daycares/5
+        [Authorize("Administrator")]
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteDaycare(int id)
         {
