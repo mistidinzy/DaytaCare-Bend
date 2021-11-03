@@ -75,6 +75,10 @@ namespace DaytaCare.Services.Identity
 
             if (result.Succeeded)
             {
+                if (data.Roles.Length > 0)
+                {
+                    await userManager.AddToRolesAsync(user, data.Roles);
+                }
                 return await CreateUserDTOAsync(user);
             }
             foreach (var error in result.Errors)
@@ -96,6 +100,8 @@ namespace DaytaCare.Services.Identity
                 UserId = user.Id,
                 Email = user.Email,
                 Username = user.UserName,
+
+                Roles = await userManager.GetRolesAsync(user),
 
                 Token = await jwtService.GetToken(user, TimeSpan.FromMinutes(5)),
             };
