@@ -10,7 +10,7 @@ namespace DaytaCare.Services
     {
         Task<List<DaycareDTO>> GetAll();
 
-        Task<Daycare> GetById(int id);
+        Task<DaycareDTO> GetById(int id);
 
         Task<Daycare> Insert(CreateDaycareDto daycare);
 
