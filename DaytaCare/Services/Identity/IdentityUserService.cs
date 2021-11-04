@@ -31,7 +31,7 @@ namespace DaytaCare.Services.Identity
             return await CreateUserDTOAsync(user);
         }
 
-        public async Task<ApplicationUser> DaycareRegister(DaycareRegisterData data, ModelStateDictionary modelState)
+        public async Task<UserDTO> DaycareRegister(DaycareRegisterData data, ModelStateDictionary modelState)
         {
             var user = new ApplicationUser
             {
@@ -50,7 +50,8 @@ namespace DaytaCare.Services.Identity
 
             if (result.Succeeded)
             {
-                return user;
+                await userManager.AddToRoleAsync(user, "Daycare Provider");
+                return await CreateUserDTOAsync(user);
             }
             foreach (var error in result.Errors)
             {
@@ -75,10 +76,8 @@ namespace DaytaCare.Services.Identity
 
             if (result.Succeeded)
             {
-                if (data.Roles.Length > 0)
-                {
-                    await userManager.AddToRolesAsync(user, data.Roles);
-                }
+               
+                await userManager.AddToRoleAsync(user, "Administrator");
                 return await CreateUserDTOAsync(user);
             }
             foreach (var error in result.Errors)
@@ -107,7 +106,7 @@ namespace DaytaCare.Services.Identity
             };
         }
 
-        async Task<ApplicationUser> IUserService.ParentRegister(ParentRegisterData data, ModelStateDictionary modelState)
+        public async Task<UserDTO> ParentRegister(ParentRegisterData data, ModelStateDictionary modelState)
         {
             var user = new ApplicationUser
             {
@@ -123,7 +122,8 @@ namespace DaytaCare.Services.Identity
 
             if (result.Succeeded)
             {
-                return user;
+                await userManager.AddToRoleAsync(user, "Parent");
+                return await CreateUserDTOAsync(user);
             }
             foreach (var error in result.Errors)
             {

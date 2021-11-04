@@ -10,8 +10,8 @@ namespace DaytaCare.Services.Identity
   {
 
     Task<UserDTO> Register ( RegisterData data, ModelStateDictionary modelState );
-    Task <ApplicationUser> DaycareRegister ( DaycareRegisterData data, ModelStateDictionary modelState );
+    Task <UserDTO> DaycareRegister ( DaycareRegisterData data, ModelStateDictionary modelState );
     Task <UserDTO> Authenticate(LoginData data);
-    Task <ApplicationUser> ParentRegister(ParentRegisterData data, ModelStateDictionary modelState);
+    Task <UserDTO> ParentRegister(ParentRegisterData data, ModelStateDictionary modelState);
     }
 }
