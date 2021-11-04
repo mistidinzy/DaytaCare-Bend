@@ -31,11 +31,10 @@ namespace DaytaCare.Services.Identity
             return await CreateUserDTOAsync(user);
         }
 
-        public async Task<UserDTO> DaycareRegister(DaycareRegisterData data, ModelStateDictionary modelState)
+        public async Task<DaycareRegisterDto> DaycareRegister(DaycareRegisterData data, ModelStateDictionary modelState)
         {
             var user = new ApplicationUser
             {
-                UserName = data.Username,
                 Name = data.Name,
                 LicenseNumber = data.LicenseNumber,
                 Email = data.Email,
@@ -51,7 +50,7 @@ namespace DaytaCare.Services.Identity
             if (result.Succeeded)
             {
                 await userManager.AddToRoleAsync(user, "Daycare Provider");
-                return await CreateUserDTOAsync(user);
+                return await CreateDaycareRegisterDtoAsync(user);
             }
             foreach (var error in result.Errors)
             {
@@ -63,6 +62,11 @@ namespace DaytaCare.Services.Identity
                 modelState.AddModelError(errorKey, error.Description);
             }
             return null;
+        }
+
+        private Task<DaycareRegisterDto> CreateDaycareRegisterDtoAsync ( ApplicationUser user )
+        {
+            throw new NotImplementedException();
         }
 
         public async Task<UserDTO> Register(RegisterData data, ModelStateDictionary modelState)
