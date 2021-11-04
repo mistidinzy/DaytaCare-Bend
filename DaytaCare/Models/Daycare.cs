@@ -1,4 +1,5 @@
-﻿using System;
+using DaytaCare.Models.Identity;
+using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -18,6 +19,8 @@ namespace DaytaCare.Models
     public class Daycare
     {
         public int Id { get; set; }
+        public string OwnerId { get; set; }
+        public ApplicationUser Owner { get; set; }
 
         public DaycareType DaycareType { get; set; }
 
