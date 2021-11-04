@@ -2,12 +2,13 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using DaytaCare.Models;
+using DaytaCare.Models.DTO;
 
 namespace DaytaCare.Services
 {
     public interface IDaycareRepository
     {
-        Task<List<Daycare>> GetAll();
+        Task<List<DaycareDTO>> GetAll();
 
         Task<Daycare> GetById(int id);
 
