@@ -31,26 +31,19 @@ namespace DaytaCare.Services.Identity
             return await CreateUserDTOAsync(user);
         }
 
-        public async Task<DaycareRegisterDto> DaycareRegister(DaycareRegisterData data, ModelStateDictionary modelState)
+        public async Task<UserDTO> DaycareRegister(RegisterData data, ModelStateDictionary modelState)
         {
             var user = new ApplicationUser
             {
-                Name = data.Name,
-                LicenseNumber = data.LicenseNumber,
                 Email = data.Email,
-                StreetAddress = data.StreetAddress,
-                City = data.City,
-                State = data.State,
-                Zip = data.Zip,
-                PhoneNumber = data.Phone,
-                Price = data.Price,
+                UserName = data.Username
             };
             var result = await userManager.CreateAsync(user, data.Password);
 
             if (result.Succeeded)
             {
                 await userManager.AddToRoleAsync(user, "Daycare Provider");
-                return await CreateDaycareRegisterDtoAsync(user);
+                return await CreateUserDTOAsync(user);
             }
             foreach (var error in result.Errors)
             {
