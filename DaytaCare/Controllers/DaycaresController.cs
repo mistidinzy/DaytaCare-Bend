@@ -38,7 +38,7 @@ namespace DaytaCare.Controllers
         // GET: api/Daycares/5
         [Authorize(Roles = "Administrator")]
         [HttpGet("{id}")]
-        public async Task<ActionResult<Daycare>> GetDaycare(int id)
+        public async Task<ActionResult<DaycareDTO>> GetDaycare(int id)
         {
             var daycare = await daycares.GetById(id);
 

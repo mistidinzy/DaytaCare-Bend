@@ -62,10 +62,54 @@ namespace DaytaCare.Services
             return result;
         }
 
-        public async Task<Daycare> GetById(int id)
+        public async Task<DaycareDTO> GetById(int id)
         {
-            return await _context.Daycares.FindAsync(id);
+
+            var result = await _context.Daycares
+
+            .Select(daycare => new DaycareDTO
+            {
+                DaycareId = daycare.Id,
+
+                Name = daycare.Name,
+
+                DaycareType = daycare.DaycareType.ToString(),
+
+                StreetAddress = daycare.StreetAddress,
+
+                City = daycare.City,
+
+                State = daycare.State,
+
+                Country = daycare.Country,
+
+                Phone = daycare.Phone,
+
+                Email = daycare.Email,
+
+                Price = daycare.Price,
+
+                LicenseNumber = daycare.LicenseNumber,
+
+                Availability = daycare.Availability,
+
+                Amenities = daycare.DaycareAmenities
+                    .Select(amenity => new AmenityDTO
+                    {
+                        AmenityId = amenity.Amenity.Id,
+                        Name = amenity.Amenity.Name,
+                    })
+
+               .ToList()
+
+            })
+
+            .FirstOrDefaultAsync(d => d.DaycareId == id);
+
+            return result;
+
         }
+     
 
         public async Task Insert(Daycare daycare)
         {
