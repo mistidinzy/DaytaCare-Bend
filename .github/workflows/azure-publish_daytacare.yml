@@ -6,7 +6,7 @@ name: Build and deploy ASP.Net Core app to Azure Web App - DaytaCare
 on:
   push:
     branches:
-      - azure-publish
+      - main
   workflow_dispatch:
 
 jobs:
