@@ -31,7 +31,7 @@ namespace DaytaCare.Services.Identity
             return await CreateUserDTOAsync(user);
         }
 
-        public async Task<ApplicationUser> DaycareRegister(DaycareRegisterData data, ModelStateDictionary modelState)
+        public async Task<UserDTO> DaycareRegister(DaycareRegisterData data, ModelStateDictionary modelState)
         {
             var user = new ApplicationUser
             {
@@ -50,7 +50,8 @@ namespace DaytaCare.Services.Identity
 
             if (result.Succeeded)
             {
-                return user;
+                await userManager.AddToRoleAsync(user, "Daycare Provider");
+                return await CreateUserDTOAsync(user);
             }
             foreach (var error in result.Errors)
             {
@@ -75,10 +76,8 @@ namespace DaytaCare.Services.Identity
 
             if (result.Succeeded)
             {
-                if (data.Roles.Length > 0)
-                {
-                    await userManager.AddToRolesAsync(user, data.Roles);
-                }
+               
+                await userManager.AddToRoleAsync(user, "Administrator");
                 return await CreateUserDTOAsync(user);
             }
             foreach (var error in result.Errors)
@@ -105,6 +104,37 @@ namespace DaytaCare.Services.Identity
 
                 Token = await jwtService.GetToken(user, TimeSpan.FromMinutes(5)),
             };
+        }
+
+        public async Task<UserDTO> ParentRegister(ParentRegisterData data, ModelStateDictionary modelState)
+        {
+            var user = new ApplicationUser
+            {
+                UserName = data.Username,
+                Email = data.Email,
+                FirstName = data.FirstName,
+                LastName = data.LastName,
+                PhoneNumber = data.Phone,
+                FamilyBio = data.FamilyBio,
+            };
+
+            var result = await userManager.CreateAsync(user, data.Password);
+
+            if (result.Succeeded)
+            {
+                await userManager.AddToRoleAsync(user, "Parent");
+                return await CreateUserDTOAsync(user);
+            }
+            foreach (var error in result.Errors)
+            {
+                var errorKey =
+                  error.Code.Contains("Password") ? nameof(data.Password) :
+                  error.Code.Contains("Email") ? nameof(data.Email) :
+                  error.Code.Contains("UserName") ? nameof(data.Username) :
+                  "";
+                modelState.AddModelError(errorKey, error.Description);
+            }
+            return null;
         }
     }
 }
