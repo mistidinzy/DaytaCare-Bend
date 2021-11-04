@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -111,10 +111,24 @@ namespace DaytaCare.Services
         }
      
 
-        public async Task Insert(Daycare daycare)
+        public async Task<Daycare> Insert ( CreateDaycareDto data )
         {
+            var daycare = new Daycare
+            {
+                Name = data.Name,
+                StreetAddress = data.StreetAddress,
+                City = data.City,
+                State = data.State,
+                Country = data.Country,
+                Phone = data.Phone,
+                Email = data.Email,
+                Price = data.Price,
+                LicenseNumber = data.LicenseNumber,
+                Availability = data.Availability,
+            };
             _context.Daycares.Add(daycare);
             await _context.SaveChangesAsync();
+            return daycare;
         }
 
         public async Task<bool> TryDelete(int id)

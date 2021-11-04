@@ -25,7 +25,4 @@
     <None Remove="Models\DTO\" />
     <None Remove="Swashbuckle.AspNetCore.Filters" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Models\DTO\" />
-  </ItemGroup>
 </Project>

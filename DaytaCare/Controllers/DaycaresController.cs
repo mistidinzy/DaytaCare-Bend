@@ -73,9 +73,9 @@ namespace DaytaCare.Controllers
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [Authorize(Roles = "Administrator, Daycare Provider")]
         [HttpPost]
-        public async Task<ActionResult<Daycare>> PostDaycare(Daycare daycare)
+        public async Task<ActionResult<Daycare>> PostDaycare(CreateDaycareDto data)
         {
-            await daycares.Insert(daycare);
+            var daycare = await daycares.Insert(data);
 
             return CreatedAtAction("GetDaycare", new { id = daycare.Id }, daycare);
         }
