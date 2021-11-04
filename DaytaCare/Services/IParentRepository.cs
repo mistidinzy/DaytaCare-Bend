@@ -9,6 +9,6 @@ namespace DaytaCare.Services
 {
     public interface IParentRepository
     {
-        Task<ActionResult<List<Daycare>>> SearchLocation(ParentSearchDto filter);
+        Task<ActionResult<List<Daycare>>> Search(ParentSearchDto filter);
     }
 }

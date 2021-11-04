@@ -19,7 +19,7 @@ namespace DaytaCare.Services
             _context = context;
         }
 
-        public async Task<ActionResult<List<Daycare>>> SearchLocation(ParentSearchDto filter)
+        public async Task<ActionResult<List<Daycare>>> Search(ParentSearchDto filter)
         {
             IQueryable<Daycare> query = context.Daycares;
 
@@ -29,19 +29,12 @@ namespace DaytaCare.Services
             if (filter.State != null)
                 query = query.Where(d => d.State == filter.State);
 
+            if (filter.AmenityId != null)
+                query = query.Where(d => d.DaycareAmenities.Any(a => a.AmenityId == filter.AmenityId));
+
             List<Daycare> results = await query.ToListAsync();
 
             return results;
-        }
-
-        public async Task<ActionResult<List<DaycareAmenity>>> SearchAmenity(ParentSearchDto filter)
-        {
-            IQueryable<DaycareAmenity> query = context.DaycareAmenities;
-
-            if (filter.AmenityId != null)
-                query = query.Any(a => a.AmenityId == filter.AmenityId);
-
-            List<Daycare> results = await query.ToListAsync();
         }
     }
 }

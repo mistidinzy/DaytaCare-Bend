@@ -20,10 +20,10 @@ namespace DaytaCare.Controllers
     {
         private readonly IParentRepository daycares;
 
-        [HttpGet]
-        public async Task<ActionResult<List<Daycare>>> SearchLocation(ParentSearchDto filter)
+        [HttpGet("search")]
+        public async Task<ActionResult<List<Daycare>>> Search(ParentSearchDto filter)
         {
-            return await daycares.SearchLocation(filter);
+            return await daycares.Search(filter);
         }
     }
 }
