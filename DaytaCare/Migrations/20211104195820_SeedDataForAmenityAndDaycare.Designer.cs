@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DaytaCare.Migrations
 {
     [DbContext(typeof(DaytaCareDbContext))]
-    [Migration("20211104161102_AddDaycareTypeEnum")]
-    partial class AddDaycareTypeEnum
+    [Migration("20211104195820_SeedDataForAmenityAndDaycare")]
+    partial class SeedDataForAmenityAndDaycare
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -35,6 +35,48 @@ namespace DaytaCare.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Amenities");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Name = "Parking"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Name = "Indoor Playground"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Name = "Pay Scaling"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Name = "Shuttle Transportation"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            Name = "Security"
+                        },
+                        new
+                        {
+                            Id = 6,
+                            Name = "Wheelchair Accessible"
+                        },
+                        new
+                        {
+                            Id = 7,
+                            Name = "Education"
+                        },
+                        new
+                        {
+                            Id = 8,
+                            Name = "Meal Plan"
+                        });
                 });
 
             modelBuilder.Entity("DaytaCare.Models.Daycare", b =>
@@ -69,6 +111,9 @@ namespace DaytaCare.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("OwnerId")
+                        .HasColumnType("nvarchar(450)");
+
                     b.Property<string>("Phone")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -86,7 +131,86 @@ namespace DaytaCare.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("OwnerId");
+
                     b.ToTable("Daycares");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Availability = true,
+                            City = "Cedar Rapids",
+                            Country = "United States",
+                            DaycareType = 5,
+                            Email = "KidsPoint@example.com",
+                            LicenseNumber = 1,
+                            Name = "KidsPoint Downtown Learning Center & Preschool",
+                            Phone = "(319) 365-1636",
+                            Price = 200m,
+                            State = "Iowa",
+                            StreetAddress = "318 5th St SE"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Availability = true,
+                            City = "Cedar Rapids",
+                            Country = "United States",
+                            DaycareType = 5,
+                            Email = "TeddyBear@example.com",
+                            LicenseNumber = 2,
+                            Name = "Teddy Bear Child Care Center Inc",
+                            Phone = "(319) 365-6534",
+                            Price = 210m,
+                            State = "Iowa",
+                            StreetAddress = "2730 Bowling St SW"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Availability = true,
+                            City = "Iowa City",
+                            Country = "United States",
+                            DaycareType = 5,
+                            Email = "iowa4cshometies@yahoo.com",
+                            LicenseNumber = 3,
+                            Name = "Home Ties Child Care Center",
+                            Phone = "(319) 341-0050",
+                            Price = 190m,
+                            State = "Iowa",
+                            StreetAddress = "405 Myrtle Ave"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Availability = false,
+                            City = "Iowa City",
+                            Country = "United States",
+                            DaycareType = 1,
+                            Email = "alicesrainbowchildcarecenters@gmail.com",
+                            LicenseNumber = 4,
+                            Name = "Alice's Rainbow Child Care Center",
+                            Phone = "(319) 354-1466",
+                            Price = 225m,
+                            State = "Iowa",
+                            StreetAddress = "421 Melrose Ave"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            Availability = true,
+                            City = "Marion",
+                            Country = "United States",
+                            DaycareType = 5,
+                            Email = "KidsInc@example.com",
+                            LicenseNumber = 5,
+                            Name = "KIDS INC.",
+                            Phone = "(319) 447-6316",
+                            Price = 200m,
+                            State = "Iowa",
+                            StreetAddress = "1100 35th St"
+                        });
                 });
 
             modelBuilder.Entity("DaytaCare.Models.DaycareAmenity", b =>
@@ -102,6 +226,63 @@ namespace DaytaCare.Migrations
                     b.HasIndex("AmenityId");
 
                     b.ToTable("DaycareAmenities");
+
+                    b.HasData(
+                        new
+                        {
+                            DaycareId = 1,
+                            AmenityId = 1
+                        },
+                        new
+                        {
+                            DaycareId = 1,
+                            AmenityId = 2
+                        },
+                        new
+                        {
+                            DaycareId = 2,
+                            AmenityId = 3
+                        },
+                        new
+                        {
+                            DaycareId = 2,
+                            AmenityId = 4
+                        },
+                        new
+                        {
+                            DaycareId = 3,
+                            AmenityId = 5
+                        },
+                        new
+                        {
+                            DaycareId = 3,
+                            AmenityId = 6
+                        },
+                        new
+                        {
+                            DaycareId = 4,
+                            AmenityId = 7
+                        },
+                        new
+                        {
+                            DaycareId = 5,
+                            AmenityId = 8
+                        },
+                        new
+                        {
+                            DaycareId = 5,
+                            AmenityId = 5
+                        },
+                        new
+                        {
+                            DaycareId = 2,
+                            AmenityId = 7
+                        },
+                        new
+                        {
+                            DaycareId = 5,
+                            AmenityId = 6
+                        });
                 });
 
             modelBuilder.Entity("DaytaCare.Models.Identity.ApplicationUser", b =>
@@ -353,6 +534,15 @@ namespace DaytaCare.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
+            modelBuilder.Entity("DaytaCare.Models.Daycare", b =>
+                {
+                    b.HasOne("DaytaCare.Models.Identity.ApplicationUser", "Owner")
+                        .WithMany()
+                        .HasForeignKey("OwnerId");
+
+                    b.Navigation("Owner");
+                });
+
             modelBuilder.Entity("DaytaCare.Models.DaycareAmenity", b =>
                 {
                     b.HasOne("DaytaCare.Models.Amenity", "Amenity")
@@ -362,7 +552,7 @@ namespace DaytaCare.Migrations
                         .IsRequired();
 
                     b.HasOne("DaytaCare.Models.Daycare", "Daycare")
-                        .WithMany()
+                        .WithMany("DaycareAmenities")
                         .HasForeignKey("DaycareId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -421,6 +611,11 @@ namespace DaytaCare.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("DaytaCare.Models.Daycare", b =>
+                {
+                    b.Navigation("DaycareAmenities");
                 });
 #pragma warning restore 612, 618
         }
