@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using DaytaCare.Data;
 using DaytaCare.Models;
+using DaytaCare.Models.DTO;
 using Microsoft.EntityFrameworkCore;
 
 namespace DaytaCare.Services
@@ -97,6 +98,21 @@ namespace DaytaCare.Services
             _context.DaycareAmenities.Remove(daycareAmenity);
             await _context.SaveChangesAsync();
         }
+
+        public async Task<List<DaycareDTO>> DaycareDTO()
+        {
+            var result = await _context.Daycares
+
+            .Select(daycare => new DaycareDTO
+            {
+                Id = daycare.Id,
+
+            }
+         )
+            return result;
+        }
+
+
     }
 }
 
