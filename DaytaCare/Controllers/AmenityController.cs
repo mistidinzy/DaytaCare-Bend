@@ -11,7 +11,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace DaytaCare.Controllers
 {
-    [Authorize("Administrator")]
+    [Authorize(Roles = "Administrator")]
     [Route("api/[controller]")]
     [ApiController]
     public class AmenityController : ControllerBase

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using DaytaCare.Data;
 using DaytaCare.Models;
+using DaytaCare.Models.DTO;
 using Microsoft.EntityFrameworkCore;
 
 namespace DaytaCare.Services
@@ -17,9 +18,40 @@ namespace DaytaCare.Services
             _context = context;
         }
 
-        public async Task<List<Daycare>> GetAll()
+        public async Task<List<DaycareDTO>> GetAll()
         {
-            return await _context.Daycares.ToListAsync();
+            var result = await _context.Daycares
+
+            .Select(daycare => new DaycareDTO
+            {
+                DaycareId = daycare.Id,
+
+                Name = daycare.Name,
+
+                DaycareType = daycare.DaycareType.ToString(),
+
+                StreetAddress = daycare.StreetAddress,
+
+                City = daycare.City,
+
+                State = daycare.State,
+
+                Country = daycare.Country,
+
+                Phone = daycare.Phone,
+
+                Email = daycare.Email,
+
+                Price = daycare.Price,
+
+                LicenseNumber = daycare.LicenseNumber,
+
+                Availability = daycare.Availability
+            })
+
+            .ToListAsync();
+
+            return result;
         }
 
         public async Task<Daycare> GetById(int id)

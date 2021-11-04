@@ -43,7 +43,7 @@ namespace DaytaCare.Controllers
         }
 
         [HttpPost("DaycareRegister")]
-        public async Task<IActionResult> DaycareRegister(DaycareRegisterData data)
+        public async Task<ActionResult<DaycareRegisterDto>> DaycareRegister(DaycareRegisterData data)
         {
             var user = await userService.DaycareRegister(data, this.ModelState);
             if (user == null)
