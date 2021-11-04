@@ -47,7 +47,16 @@ namespace DaytaCare.Services
                 LicenseNumber = daycare.LicenseNumber,
 
                 Availability = daycare.Availability
-            })
+
+
+                Amenities = amenity.DaycareAmenities
+                .Select(a => new AmenityDTO
+                {
+                    AmenityId = a.AmenityId,
+                    Name = a.Amenity.Name
+                })
+                .ToList(),
+            });
 
             .ToListAsync();
 
