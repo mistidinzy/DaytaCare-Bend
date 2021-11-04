@@ -32,6 +32,9 @@ namespace DaytaCare.Services
             if (filter.AmenityId != null)
                 query = query.Where(d => d.DaycareAmenities.Any(a => a.AmenityId == filter.AmenityId));
 
+            if (filter.Availability != null)
+                query = query.Where(d => d.Availability == filter.Availability);
+
             List<Daycare> results = await query.ToListAsync();
 
             return results;

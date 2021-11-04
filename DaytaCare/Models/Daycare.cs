@@ -5,9 +5,22 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace DaytaCare.Models
 {
+
+    public enum DaycareType
+    {
+        InHomeUnregistered,
+        InHomeA,
+        InHomeB,
+        InHomeC1,
+        InHomeC2,
+        LicensedCenter
+    }
+
     public class Daycare
     {
         public int Id { get; set; }
+
+        public DaycareType DaycareType { get; set; }
 
         [Required]
         public string Name { get; set; }
@@ -36,5 +49,7 @@ namespace DaytaCare.Models
         public int LicenseNumber { get; set; }
 
         public List<DaycareAmenity> DaycareAmenities { get; set; }
+
+        public bool Availability { get; set; }
     }
 }

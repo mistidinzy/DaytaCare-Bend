@@ -10,5 +10,7 @@ namespace DaytaCare.Models.DTO
         public string State { get; set; }
 
         public int? AmenityId { get; set; }
+
+        public bool? Availability { get; set; }
     }
 }
