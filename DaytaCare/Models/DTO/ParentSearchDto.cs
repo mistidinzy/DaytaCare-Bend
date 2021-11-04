@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace DaytaCare.Models.DTO
@@ -12,5 +13,7 @@ namespace DaytaCare.Models.DTO
         public int? AmenityId { get; set; }
 
         public bool? Availability { get; set; }
+
+        public List<DaycareType> DaycareType { get; set; }
     }
 }

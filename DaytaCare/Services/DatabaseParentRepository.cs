@@ -24,21 +24,30 @@ namespace DaytaCare.Services
             IQueryable<Daycare> query = _context.Daycares;
 
             if (filter.City != null)
-                query = query.Where(d => d.City == filter.City);
+                query = query
+                    .Where(d => d.City == filter.City);
 
             if (filter.State != null)
-                query = query.Where(d => d.State == filter.State);
+                query = query
+                    .Where(d => d.State == filter.State);
 
             if (filter.AmenityId != null)
-                query = query.Where(d => d.DaycareAmenities.Any(a => a.AmenityId == filter.AmenityId));
+                query = query
+                    .Where(d => d.DaycareAmenities
+                        .Any(a => a.AmenityId == filter.AmenityId));
 
             if (filter.Availability != null)
-                query = query.Where(d => d.Availability == filter.Availability);
+                query = query
+                    .Where(d => d.Availability == filter.Availability);
 
+            if (filter.DaycareType != null)
+                query = query
+                    .Where(d => filter.DaycareType
+                        .Contains(d.DaycareType));
+       
             List<Daycare> results = await query.ToListAsync();
 
             return results;
         }
     }
 }
-
