@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using DaytaCare.Models;
@@ -12,7 +12,7 @@ namespace DaytaCare.Services
 
         Task<Daycare> GetById(int id);
 
-        Task Insert(Daycare daycare);
+        Task<Daycare> Insert(CreateDaycareDto daycare);
 
         Task<bool> TryDelete(int id);
 
