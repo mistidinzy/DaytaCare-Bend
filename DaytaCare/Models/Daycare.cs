@@ -33,5 +33,7 @@ namespace DaytaCare.Models
         public decimal Price { get; set; }
 
         public int LicenseNumber { get; set; }
+
+        //public DaycareAmenity DaycareAmenity { get; set; }
     }
 }
