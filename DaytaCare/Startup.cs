@@ -17,6 +17,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
+using Swashbuckle.AspNetCore.Filters;
 
 namespace DaytaCare
 {
@@ -79,6 +80,16 @@ namespace DaytaCare
                     Title = "Dayta Care",
                     Version = "v1",
                 });
+
+                options.AddSecurityDefinition("JWT", new OpenApiSecurityScheme
+                {
+                    Description = "Standard Authorization header using the Bearer scheme. Example: \"Bearer {token}\"",
+                    In = ParameterLocation.Header,
+                    Name = "Authorization",
+                    Type = SecuritySchemeType.ApiKey,
+                });
+
+                options.OperationFilter<SecurityRequirementsOperationFilter>(true, "JWT");
             });
         }
 
