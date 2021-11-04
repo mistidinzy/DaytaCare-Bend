@@ -25,8 +25,8 @@ namespace DaytaCare.Controllers
             this.daycares = daycares;
         }
 
-        [HttpPost("search")]
-        public async Task<ActionResult<List<Daycare>>> Search(ParentSearchDto filter)
+        [HttpGet("search")]
+        public async Task<ActionResult<List<Daycare>>> Search([FromQuery]ParentSearchDto filter)
         {
             return await daycares.Search(filter);
         }
