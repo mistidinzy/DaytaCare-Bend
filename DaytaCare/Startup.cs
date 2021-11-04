@@ -90,6 +90,7 @@ namespace DaytaCare
                 });
 
                 options.OperationFilter<SecurityRequirementsOperationFilter>(true, "JWT");
+                options.OperationFilter<AppendAuthorizeToSummaryOperationFilter>();
             });
         }
 
