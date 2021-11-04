@@ -10,6 +10,5 @@ namespace DaytaCare.Models
         public Daycare Daycare { get; set; }
 
         public Amenity Amenity { get; set; }
-
     }
 }
