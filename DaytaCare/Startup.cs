@@ -67,6 +67,8 @@ namespace DaytaCare
 
             services.AddScoped<IDaycareRepository, DatabaseDaycareRepository>();
 
+            services.AddScoped<IParentRepository, DatabaseParentRepository>();
+
             services.AddControllers();
 
             services.AddSwaggerGen(options =>

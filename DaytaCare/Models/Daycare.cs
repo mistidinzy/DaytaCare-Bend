@@ -1,5 +1,7 @@
+
 using DaytaCare.Models.Identity;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -50,8 +52,8 @@ namespace DaytaCare.Models
 
         public int LicenseNumber { get; set; }
 
-        public bool Availability { get; set; }
+        public List<DaycareAmenity> DaycareAmenities { get; set; }
 
-        //public DaycareAmenity DaycareAmenity { get; set; }
+        public bool Availability { get; set; }
     }
 }
