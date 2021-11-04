@@ -20,7 +20,12 @@ namespace DaytaCare.Controllers
     {
         private readonly IParentRepository daycares;
 
-        [HttpGet("search")]
+        public ParentsController(IParentRepository daycares)
+        {
+            this.daycares = daycares;
+        }
+
+        [HttpPost("search")]
         public async Task<ActionResult<List<Daycare>>> Search(ParentSearchDto filter)
         {
             return await daycares.Search(filter);

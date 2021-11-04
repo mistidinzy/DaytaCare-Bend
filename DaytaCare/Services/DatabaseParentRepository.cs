@@ -12,16 +12,16 @@ namespace DaytaCare.Services
 {
     public class DatabaseParentRepository : IParentRepository
     {
-        private readonly DaytaCareDbContext context;
+        private readonly DaytaCareDbContext _context;
 
-        public DatabaseParentRepository(DaytaCareDbContext _context)
+        public DatabaseParentRepository(DaytaCareDbContext context)
         {
             _context = context;
         }
 
         public async Task<ActionResult<List<Daycare>>> Search(ParentSearchDto filter)
         {
-            IQueryable<Daycare> query = context.Daycares;
+            IQueryable<Daycare> query = _context.Daycares;
 
             if (filter.City != null)
                 query = query.Where(d => d.City == filter.City);
