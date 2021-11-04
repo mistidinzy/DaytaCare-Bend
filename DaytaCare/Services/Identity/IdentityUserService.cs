@@ -106,5 +106,35 @@ namespace DaytaCare.Services.Identity
                 Token = await jwtService.GetToken(user, TimeSpan.FromMinutes(5)),
             };
         }
+
+        async Task<ApplicationUser> IUserService.ParentRegister(ParentRegisterData data, ModelStateDictionary modelState)
+        {
+            var user = new ApplicationUser
+            {
+                UserName = data.Username,
+                Email = data.Email,
+                FirstName = data.FirstName,
+                LastName = data.LastName,
+                PhoneNumber = data.Phone,
+                FamilyBio = data.FamilyBio,
+            };
+
+            var result = await userManager.CreateAsync(user, data.Password);
+
+            if (result.Succeeded)
+            {
+                return user;
+            }
+            foreach (var error in result.Errors)
+            {
+                var errorKey =
+                  error.Code.Contains("Password") ? nameof(data.Password) :
+                  error.Code.Contains("Email") ? nameof(data.Email) :
+                  error.Code.Contains("UserName") ? nameof(data.Username) :
+                  "";
+                modelState.AddModelError(errorKey, error.Description);
+            }
+            return null;
+        }
     }
 }

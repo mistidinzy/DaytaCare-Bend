@@ -52,6 +52,16 @@ namespace DaytaCare.Controllers
             return Ok(user);
         }
 
+        [HttpPost("ParentRegister")]
+        public async Task<IActionResult> ParentRegister(ParentRegisterData data)
+        {
+            var user = await userService.ParentRegister(data, this.ModelState);
+            if (user == null)
+                return BadRequest(new ValidationProblemDetails(ModelState)
+                  );
+            return Ok(user);
+        }
+
         [Authorize]
         [HttpGet("[action]")]
         public async Task<ActionResult<UserDTO>> Self()
