@@ -13,7 +13,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace DaytaCare.Controllers
 { 
-    //[Authorize("Administrator, Parent")]
+    [Authorize(Roles = "Administrator, Parent")]
     [Route("api/[controller]")]
     [ApiController]
     public class ParentsController : ControllerBase
