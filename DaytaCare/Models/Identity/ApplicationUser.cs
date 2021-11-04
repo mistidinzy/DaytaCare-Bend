@@ -15,13 +15,6 @@ namespace DaytaCare.Models.Identity
 
     //[Required]
     public string LastName { get; set; }
-    public string Name { get; set; }
-    public string LicenseNumber { get; set; }
-    public string StreetAddress { get; set; }
-    public string City { get; set; }
-    public string State { get; set; }
-    public string Zip { get; set; }
-    public decimal Price { get; set; }
     public string FamilyBio { get; set; }
   }
 }
