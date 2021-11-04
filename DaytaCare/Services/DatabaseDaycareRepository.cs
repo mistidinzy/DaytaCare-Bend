@@ -105,14 +105,35 @@ namespace DaytaCare.Services
 
             .Select(daycare => new DaycareDTO
             {
-                Id = daycare.Id,
+                DaycareId = daycare.Id,
 
-            }
-         )
+                Name = daycare.Name,
+
+                DaycareType = daycare.DaycareType.ToString(),
+
+                StreetAddress = daycare.StreetAddress,
+
+                City = daycare.City,
+
+                State = daycare.State,
+
+                Country = daycare.Country,
+
+                Phone = daycare.Phone,
+
+                Email = daycare.Email,
+
+                Price = daycare.Price,
+
+                LicenseNumber = daycare.LicenseNumber,
+
+                Availability = daycare.Availability
+            })
+
+            .ToListAsync();
+
             return result;
         }
-
-
     }
 }
 
