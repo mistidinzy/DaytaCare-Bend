@@ -9,6 +9,7 @@ using DaytaCare.Data;
 using DaytaCare.Models;
 using DaytaCare.Services;
 using Microsoft.AspNetCore.Authorization;
+using DaytaCare.Models.DTO;
 
 namespace DaytaCare.Controllers
 {
@@ -29,7 +30,7 @@ namespace DaytaCare.Controllers
         // GET: api/Daycares
         [AllowAnonymous]
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Daycare>>> GetDaycares()
+        public async Task<ActionResult<IEnumerable<DaycareDTO>>> GetDaycares()
         {
             return await daycares.GetAll();
         }
