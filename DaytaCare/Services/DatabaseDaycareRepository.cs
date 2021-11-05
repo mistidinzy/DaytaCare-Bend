@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using DaytaCare.Data;
 using DaytaCare.Models;
 using DaytaCare.Models.DTO;
+using DaytaCare.Services.Identity;
 using Microsoft.EntityFrameworkCore;
 
 namespace DaytaCare.Services
@@ -12,16 +13,19 @@ namespace DaytaCare.Services
     public class DatabaseDaycareRepository : IDaycareRepository
     {
         private readonly DaytaCareDbContext _context;
+        private readonly IUserService userService;
 
-        public DatabaseDaycareRepository(DaytaCareDbContext context)
+        public DatabaseDaycareRepository(DaytaCareDbContext context, IUserService userService)
         {
             _context = context;
+            this.userService = userService;
         }
 
         public async Task<List<DaycareDTO>> GetAll()
         {
+            var user = await userService.GetCurrentUser();
             var result = await _context.Daycares
-
+            .Where(daycare => daycare.OwnerId == user.UserId)
             .Select(daycare => new DaycareDTO
             {
                 DaycareId = daycare.Id,
@@ -64,9 +68,9 @@ namespace DaytaCare.Services
 
         public async Task<DaycareDTO> GetById(int id)
         {
-
+            var user = await userService.GetCurrentUser();
             var result = await _context.Daycares
-
+            .Where (daycare => daycare.OwnerId == user.UserId)
             .Select(daycare => new DaycareDTO
             {
                 DaycareId = daycare.Id,
@@ -113,6 +117,7 @@ namespace DaytaCare.Services
 
         public async Task<Daycare> Insert ( CreateDaycareDto data )
         {
+            var user = await userService.GetCurrentUser();
             var daycare = new Daycare
             {
                 Name = data.Name,
@@ -125,8 +130,10 @@ namespace DaytaCare.Services
                 Price = data.Price,
                 LicenseNumber = data.LicenseNumber,
                 Availability = data.Availability,
+                OwnerId = user.UserId,
             };
             _context.Daycares.Add(daycare);
+
             await _context.SaveChangesAsync();
             return daycare;
         }
