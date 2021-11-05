@@ -66,8 +66,9 @@ namespace DaytaCare.Controllers
         [HttpGet("[action]")]
         public async Task<ActionResult<UserDTO>> Self()
         {
-            var user = this.User;
-            return Ok();
+            var user = await userService.GetCurrentUser();
+            return (user);
+            //return Ok();
         }
     }
 }
