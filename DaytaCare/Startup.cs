@@ -39,7 +39,10 @@ namespace DaytaCare
             {
                 string connectionString = Configuration.GetConnectionString("DefaultConnection");
 
-                options.UseSqlServer(connectionString);
+                options.UseSqlServer(connectionString, o =>
+                {
+                    o.EnableRetryOnFailure();
+                });
             });
 
 
