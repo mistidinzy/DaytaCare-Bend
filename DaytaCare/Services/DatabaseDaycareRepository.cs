@@ -116,6 +116,7 @@ namespace DaytaCare.Services
 
         public async Task<Daycare> Insert ( CreateDaycareDto data )
         {
+            var user = await userService.GetCurrentUser();
             var daycare = new Daycare
             {
                 Name = data.Name,
@@ -128,8 +129,10 @@ namespace DaytaCare.Services
                 Price = data.Price,
                 LicenseNumber = data.LicenseNumber,
                 Availability = data.Availability,
+                OwnerId = user.UserId,
             };
             _context.Daycares.Add(daycare);
+
             await _context.SaveChangesAsync();
             return daycare;
         }
