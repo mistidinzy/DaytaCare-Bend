@@ -25,6 +25,7 @@ namespace DaytaCare.Controllers
             this.daycares = daycares;
         }
 
+        [AllowAnonymous]
         [HttpGet("search")]
         public async Task<ActionResult<List<Daycare>>> Search([FromQuery]ParentSearchDto filter)
         {
