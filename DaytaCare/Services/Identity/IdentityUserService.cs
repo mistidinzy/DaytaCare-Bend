@@ -1,12 +1,14 @@
 using DaytaCare.Controllers;
 using DaytaCare.Models.DTO;
 using DaytaCare.Models.Identity;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace DaytaCare.Services.Identity
@@ -15,11 +17,14 @@ namespace DaytaCare.Services.Identity
     {
         private readonly UserManager<ApplicationUser> userManager;
         private readonly JwtService jwtService;
+        private readonly IHttpContextAccessor httpContextAccessor;
 
-        public IdentityUserService(UserManager<ApplicationUser> userManager, JwtService jwtService)
+
+        public IdentityUserService(UserManager<ApplicationUser> userManager, JwtService jwtService, IHttpContextAccessor httpContextAccessor)
         {
             this.userManager = userManager;
             this.jwtService = jwtService;
+            this.httpContextAccessor = httpContextAccessor;
         }
 
         public async Task<UserDTO> Authenticate(LoginData data)
@@ -133,5 +138,19 @@ namespace DaytaCare.Services.Identity
             }
             return null;
         }
+
+        public async Task<UserDTO> GetCurrentUser ( )
+        {
+            var principal = httpContextAccessor.HttpContext.User;
+            return await GetUser(principal);
+        }
+
+        public async Task<UserDTO> GetUser ( ClaimsPrincipal principal )
+        {
+            var user = await userManager.GetUserAsync(principal);
+            return await CreateUserDTOAsync(user);
+        }
     }
+
+
 }
