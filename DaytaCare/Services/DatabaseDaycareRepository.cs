@@ -23,8 +23,9 @@ namespace DaytaCare.Services
 
         public async Task<List<DaycareDTO>> GetAll()
         {
+            var user = await userService.GetCurrentUser();
             var result = await _context.Daycares
-
+            .Where(daycare => daycare.OwnerId == user.UserId)
             .Select(daycare => new DaycareDTO
             {
                 DaycareId = daycare.Id,
