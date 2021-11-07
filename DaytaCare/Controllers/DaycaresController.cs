@@ -28,7 +28,6 @@ namespace DaytaCare.Controllers
         }
 
         // GET: api/Daycares
-        [AllowAnonymous]
         [HttpGet]
         public async Task<ActionResult<IEnumerable<DaycareDTO>>> GetDaycares()
         {
@@ -36,9 +35,9 @@ namespace DaytaCare.Controllers
         }
 
         // GET: api/Daycares/5
-        [Authorize(Roles = "Administrator")]
+        [Authorize(Roles = "Administrator, Daycare Provider")]
         [HttpGet("{id}")]
-        public async Task<ActionResult<Daycare>> GetDaycare(int id)
+        public async Task<ActionResult<DaycareDTO>> GetDaycare(int id)
         {
             var daycare = await daycares.GetById(id);
 
@@ -73,9 +72,9 @@ namespace DaytaCare.Controllers
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [Authorize(Roles = "Administrator, Daycare Provider")]
         [HttpPost]
-        public async Task<ActionResult<Daycare>> PostDaycare(Daycare daycare)
+        public async Task<ActionResult<Daycare>> PostDaycare(CreateDaycareDto data)
         {
-            await daycares.Insert(daycare);
+            var daycare = await daycares.Insert(data);
 
             return CreatedAtAction("GetDaycare", new { id = daycare.Id }, daycare);
         }

@@ -19,7 +19,7 @@ namespace DaytaCare.Services
             _context = context;
         }
 
-        public async Task<ActionResult<List<Daycare>>> Search(ParentSearchDto filter)
+        public async Task<ActionResult<List<DaycareDTO>>> Search(ParentSearchDto filter)
         {
             IQueryable<Daycare> query = _context.Daycares;
 
@@ -44,8 +44,44 @@ namespace DaytaCare.Services
                 query = query
                     .Where(d => filter.DaycareType
                         .Contains(d.DaycareType));
-       
-            List<Daycare> results = await query.ToListAsync();
+
+            List<DaycareDTO> results = await query
+                .Select(daycare => new DaycareDTO
+                {
+                    DaycareId = daycare.Id,
+
+                    Name = daycare.Name,
+
+                    DaycareType = daycare.DaycareType.ToString(),
+
+                    StreetAddress = daycare.StreetAddress,
+
+                    City = daycare.City,
+
+                    State = daycare.State,
+
+                    Country = daycare.Country,
+
+                    Phone = daycare.Phone,
+
+                    Email = daycare.Email,
+
+                    Price = daycare.Price,
+
+                    LicenseNumber = daycare.LicenseNumber,
+
+                    Availability = daycare.Availability,
+
+                    Amenities = daycare.DaycareAmenities
+                    .Select(amenity => new AmenityDTO
+                    {
+                        AmenityId = amenity.Amenity.Id,
+                        Name = amenity.Amenity.Name,
+                    })
+                .ToList()
+                })
+
+                .ToListAsync();
 
             return results;
         }

@@ -43,7 +43,7 @@ namespace DaytaCare.Controllers
         }
 
         [HttpPost("DaycareRegister")]
-        public async Task<ActionResult<DaycareRegisterDto>> DaycareRegister(DaycareRegisterData data)
+        public async Task<ActionResult<UserDTO>> DaycareRegister(RegisterData data)
         {
             var user = await userService.DaycareRegister(data, this.ModelState);
             if (user == null)
@@ -66,8 +66,9 @@ namespace DaytaCare.Controllers
         [HttpGet("[action]")]
         public async Task<ActionResult<UserDTO>> Self()
         {
-            var user = this.User;
-            return Ok();
+            var user = await userService.GetCurrentUser();
+            return (user);
+            //return Ok();
         }
     }
 }

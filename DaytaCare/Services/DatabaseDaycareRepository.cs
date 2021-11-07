@@ -1,10 +1,11 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using DaytaCare.Data;
 using DaytaCare.Models;
 using DaytaCare.Models.DTO;
+using DaytaCare.Services.Identity;
 using Microsoft.EntityFrameworkCore;
 
 namespace DaytaCare.Services
@@ -12,16 +13,19 @@ namespace DaytaCare.Services
     public class DatabaseDaycareRepository : IDaycareRepository
     {
         private readonly DaytaCareDbContext _context;
+        private readonly IUserService userService;
 
-        public DatabaseDaycareRepository(DaytaCareDbContext context)
+        public DatabaseDaycareRepository(DaytaCareDbContext context, IUserService userService)
         {
             _context = context;
+            this.userService = userService;
         }
 
         public async Task<List<DaycareDTO>> GetAll()
         {
+            var user = await userService.GetCurrentUser();
             var result = await _context.Daycares
-
+            .Where(daycare => daycare.OwnerId == user.UserId)
             .Select(daycare => new DaycareDTO
             {
                 DaycareId = daycare.Id,
@@ -46,7 +50,15 @@ namespace DaytaCare.Services
 
                 LicenseNumber = daycare.LicenseNumber,
 
-                Availability = daycare.Availability
+                Availability = daycare.Availability,
+
+                Amenities = daycare.DaycareAmenities
+                    .Select(amenity => new AmenityDTO
+                    {
+                        AmenityId = amenity.Amenity.Id,
+                        Name = amenity.Amenity.Name,
+                    })
+                .ToList()
             })
 
             .ToListAsync();
@@ -54,15 +66,76 @@ namespace DaytaCare.Services
             return result;
         }
 
-        public async Task<Daycare> GetById(int id)
+        public async Task<DaycareDTO> GetById(int id)
         {
-            return await _context.Daycares.FindAsync(id);
-        }
+            var user = await userService.GetCurrentUser();
+            var result = await _context.Daycares
+            .Where (daycare => daycare.OwnerId == user.UserId)
+            .Select(daycare => new DaycareDTO
+            {
+                DaycareId = daycare.Id,
 
-        public async Task Insert(Daycare daycare)
+                Name = daycare.Name,
+
+                DaycareType = daycare.DaycareType.ToString(),
+
+                StreetAddress = daycare.StreetAddress,
+
+                City = daycare.City,
+
+                State = daycare.State,
+
+                Country = daycare.Country,
+
+                Phone = daycare.Phone,
+
+                Email = daycare.Email,
+
+                Price = daycare.Price,
+
+                LicenseNumber = daycare.LicenseNumber,
+
+                Availability = daycare.Availability,
+
+                Amenities = daycare.DaycareAmenities
+                    .Select(amenity => new AmenityDTO
+                    {
+                        AmenityId = amenity.Amenity.Id,
+                        Name = amenity.Amenity.Name,
+                    })
+
+               .ToList()
+
+            })
+
+            .FirstOrDefaultAsync(d => d.DaycareId == id);
+
+            return result;
+
+        }
+     
+
+        public async Task<Daycare> Insert ( CreateDaycareDto data )
         {
+            var user = await userService.GetCurrentUser();
+            var daycare = new Daycare
+            {
+                Name = data.Name,
+                StreetAddress = data.StreetAddress,
+                City = data.City,
+                State = data.State,
+                Country = data.Country,
+                Phone = data.Phone,
+                Email = data.Email,
+                Price = data.Price,
+                LicenseNumber = data.LicenseNumber,
+                Availability = data.Availability,
+                OwnerId = user.UserId,
+            };
             _context.Daycares.Add(daycare);
+
             await _context.SaveChangesAsync();
+            return daycare;
         }
 
         public async Task<bool> TryDelete(int id)
