@@ -30,17 +30,15 @@ This website allows parent users to search and find daycares based on their pref
 
 ### Entity Relationship Diagram
 
-[First Draft](https://bit.ly/3H2s1AE)
-
-[Second Draft](https://bit.ly/3BND2C8)
+[ERD](https://bit.ly/3pQK8So)
 
 ### User Stories
 
-[User Stories](https://bit.ly/3044deA)
+[User Stories](https://bit.ly/30ln9WS)
 
 ### Domain Model
 
-[Domain Model](https://bit.ly/3wmGKBA)
+[Domain Model](https://bit.ly/3GzIqLU)
 
 ---
 
