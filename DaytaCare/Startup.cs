@@ -113,6 +113,13 @@ namespace DaytaCare
                 options.RoutePrefix = "docs";
             });
 
+            app.UseCors(policy =>
+            {
+                policy.AllowAnyOrigin();
+                policy.AllowAnyHeader();
+                policy.AllowAnyMethod();
+            });
+
             app.UseRouting();
 
             app.UseAuthentication();
