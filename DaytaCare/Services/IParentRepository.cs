@@ -10,5 +10,7 @@ namespace DaytaCare.Services
     public interface IParentRepository
     {
         Task<ActionResult<List<DaycareDTO>>> Search(ParentSearchDto filter);
+
+        Task<DaycareDTO> GetById(int id);
     }
 }

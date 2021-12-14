@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using DaytaCare.Data;
 using DaytaCare.Models;
 using DaytaCare.Models.DTO;
+using DaytaCare.Services.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -13,10 +14,12 @@ namespace DaytaCare.Services
     public class DatabaseParentRepository : IParentRepository
     {
         private readonly DaytaCareDbContext _context;
+        private readonly IUserService userService;
 
-        public DatabaseParentRepository(DaytaCareDbContext context)
+        public DatabaseParentRepository(DaytaCareDbContext context, IUserService userService)
         {
             _context = context;
+            this.userService = userService;
         }
 
         public async Task<ActionResult<List<DaycareDTO>>> Search(ParentSearchDto filter)
@@ -84,6 +87,51 @@ namespace DaytaCare.Services
                 .ToListAsync();
 
             return results;
+        }
+
+        public async Task<DaycareDTO> GetById(int id)
+        {
+            var result = await _context.Daycares
+            .Select(daycare => new DaycareDTO
+            {
+                DaycareId = daycare.Id,
+
+                Name = daycare.Name,
+
+                DaycareType = daycare.DaycareType.ToString(),
+
+                StreetAddress = daycare.StreetAddress,
+
+                City = daycare.City,
+
+                State = daycare.State,
+
+                Country = daycare.Country,
+
+                Phone = daycare.Phone,
+
+                Email = daycare.Email,
+
+                Price = daycare.Price,
+
+                LicenseNumber = daycare.LicenseNumber,
+
+                Availability = daycare.Availability,
+
+                Amenities = daycare.DaycareAmenities
+                    .Select(amenity => new AmenityDTO
+                    {
+                        AmenityId = amenity.Amenity.Id,
+                        Name = amenity.Amenity.Name,
+                    })
+
+               .ToList()
+
+            })
+
+            .FirstOrDefaultAsync(d => d.DaycareId == id);
+
+            return result;
         }
     }
 }

@@ -12,8 +12,7 @@ using Microsoft.EntityFrameworkCore;
 
 
 namespace DaytaCare.Controllers
-{ 
-    [Authorize(Roles = "Administrator, Parent")]
+{
     [Route("api/[controller]")]
     [ApiController]
     public class ParentsController : ControllerBase
@@ -24,12 +23,26 @@ namespace DaytaCare.Controllers
         {
             this.daycares = daycares;
         }
-
-        [AllowAnonymous]
+        
         [HttpGet("search")]
-        public async Task<ActionResult<List<DaycareDTO>>> Search([FromQuery]ParentSearchDto filter)
+        public async Task<ActionResult<List<DaycareDTO>>> Search([FromQuery] ParentSearchDto filter)
         {
             return await daycares.Search(filter);
         }
+
+        [Route("daycare/{id}")]
+        [HttpGet]
+        public async Task<ActionResult<DaycareDTO>> GetDaycare(int id)
+        {
+            var daycare = await daycares.GetById(id);
+
+            if (daycare == null)
+            {
+                return NotFound();
+            }
+
+            return daycare;
+        }
+
     }
 }
