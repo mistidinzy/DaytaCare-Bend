@@ -31,5 +31,20 @@ namespace DaytaCare.Controllers
         {
             return await daycares.Search(filter);
         }
+
+        [Route("daycare/{id}")]
+        [HttpGet]
+        public async Task<ActionResult<DaycareDTO>> GetDaycare(int id)
+        {
+            var daycare = await daycares.GetById(id);
+
+            if (daycare == null)
+            {
+                return NotFound();
+            }
+
+            return daycare;
+        }
+
     }
 }
