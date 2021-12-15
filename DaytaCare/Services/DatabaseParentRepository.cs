@@ -37,7 +37,8 @@ namespace DaytaCare.Services
             if (filter.AmenityId != null)
                 query = query
                     .Where(d => d.DaycareAmenities
-                        .Any(a => a.AmenityId == filter.AmenityId));
+                        .Any(a => filter.AmenityId
+                            .Contains(a.AmenityId)));
 
             if (filter.Availability != null)
                 query = query
