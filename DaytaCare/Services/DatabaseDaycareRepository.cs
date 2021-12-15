@@ -24,8 +24,9 @@ namespace DaytaCare.Services
         public async Task<List<DaycareDTO>> GetAll()
         {
             var user = await userService.GetCurrentUser();
+            var userIsAdmin = user.Roles.Contains("Administrator");
             var result = await _context.Daycares
-            .Where(daycare => daycare.OwnerId == user.UserId)
+            .Where(daycare => daycare.OwnerId == user.UserId || userIsAdmin)
             .Select(daycare => new DaycareDTO
             {
                 DaycareId = daycare.Id,
@@ -69,8 +70,9 @@ namespace DaytaCare.Services
         public async Task<DaycareDTO> GetById(int id)
         {
             var user = await userService.GetCurrentUser();
+            var userIsAdmin = user.Roles.Contains("Administrator");
             var result = await _context.Daycares
-            .Where (daycare => daycare.OwnerId == user.UserId)
+            .Where (daycare => daycare.OwnerId == user.UserId || userIsAdmin)
             .Select(daycare => new DaycareDTO
             {
                 DaycareId = daycare.Id,
