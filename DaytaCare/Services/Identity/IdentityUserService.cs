@@ -104,7 +104,7 @@ namespace DaytaCare.Services.Identity
 
                 Roles = await userManager.GetRolesAsync(user),
 
-                Token = await jwtService.GetToken(user, TimeSpan.FromMinutes(5)),
+                Token = await jwtService.GetToken(user, TimeSpan.FromMinutes(1440)),
             };
         }
 
