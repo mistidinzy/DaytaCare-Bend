@@ -51,7 +51,7 @@ namespace DaytaCare.Controllers
 
         // PUT: api/Daycares/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [Authorize(Roles = "Administator, Daycare Provider")]
+        [Authorize(Roles = "Administrator, Daycare Provider")]
         [HttpPut("{id}")]
         public async Task<IActionResult> PutDaycare(int id, Daycare daycare)
         {
@@ -99,7 +99,7 @@ namespace DaytaCare.Controllers
             return _context.Daycares.Any(e => e.Id == id);
         }
 
-        [Authorize(Roles = "Administator, Daycare Provider")]
+        [Authorize(Roles = "Administrator, Daycare Provider")]
         [HttpPost]
         [Route("{id}/Amenities/{amenityId}")]
         public async Task<ActionResult<DaycareAmenity>> PostAmenity(int id, int amenityId)
@@ -109,7 +109,7 @@ namespace DaytaCare.Controllers
             return NoContent();
         }
 
-        [Authorize(Roles = "Administator, Daycare Provider")]
+        [Authorize(Roles = "Administrator, Daycare Provider")]
         [HttpDelete]
         [Route("{id}/Amenities/{amenityId}")]
         public async Task<ActionResult<DaycareAmenity>> DeleteAmenity(int id, int amenityId)
