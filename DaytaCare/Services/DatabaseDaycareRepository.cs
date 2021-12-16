@@ -133,6 +133,12 @@ namespace DaytaCare.Services
                 LicenseNumber = data.LicenseNumber,
                 Availability = data.Availability,
                 OwnerId = user.UserId,
+                DaycareAmenities = data.AmenityId
+                .Select(amenityID => new DaycareAmenity
+                {
+                    AmenityId = amenityID,
+                })
+                .ToList()
             };
             _context.Daycares.Add(daycare);
 

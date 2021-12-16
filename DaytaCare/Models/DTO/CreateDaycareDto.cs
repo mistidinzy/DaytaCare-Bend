@@ -28,5 +28,6 @@ namespace DaytaCare.Models.DTO
         public int LicenseNumber { get; set; }
 
         public bool Availability { get; set; }
+        public List<int> AmenityId { get; set; }
     }
 }
