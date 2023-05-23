@@ -139,12 +139,12 @@ namespace DaytaCare
             {
                 endpoints.MapControllers();
 
-                endpoints.MapGet("/", async context =>
-                {
-                    var req = context.Request;
-                    var res = context.Response;
+                endpoints.MapGet("/", context => {
+                  var req = context.Request;
+                  var res = context.Response;
 
-                    context.Response.Redirect("/docs");
+                  context.Response.Redirect("/docs");
+                  return Task.CompletedTask;
                 });
             });
         }
